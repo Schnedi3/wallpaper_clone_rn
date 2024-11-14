@@ -57,11 +57,7 @@ export default function TabLayout() {
               <Ionicons
                 size={30}
                 name={focused ? "home" : "home-outline"}
-                color={
-                  focused
-                    ? lightColors.invertedText
-                    : lightColors.invertedTextDisabled
-                }
+                color={lightColors.invertedText}
               />
             </View>
           ),

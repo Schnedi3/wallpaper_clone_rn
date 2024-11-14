@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Sheet from "../components/Sheet";
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: StatusBar.currentHeight,
   },
   title: {
     fontSize: 60,
