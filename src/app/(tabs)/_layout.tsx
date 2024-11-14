@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import { lightColors } from "../../constants/Colors";
 
@@ -21,9 +21,9 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: "center" }}>
-              <Ionicons
+              <AntDesign
                 size={25}
-                name="search"
+                name="find"
                 color={focused ? lightColors.accent : lightColors.disabled}
               />
               <Text
@@ -54,10 +54,10 @@ export default function TabLayout() {
                 backgroundColor: lightColors.accent,
               }}
             >
-              <Ionicons
+              <AntDesign
                 size={30}
-                name={focused ? "home" : "home-outline"}
-                color={lightColors.invertedText}
+                name="home"
+                color={focused ? lightColors.invertedText : lightColors.invertedTextDisabled}
               />
             </View>
           ),
@@ -68,9 +68,9 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: "center" }}>
-              <Ionicons
+              <AntDesign
                 size={25}
-                name={focused ? "person" : "person-outline"}
+                name="user"
                 color={focused ? lightColors.accent : lightColors.disabled}
               />
               <Text

@@ -6,7 +6,7 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import { lightColors } from "@/src/constants/Colors";
 import { Walls } from "@/src/constants/Walls";
@@ -55,9 +55,9 @@ export default function Explore() {
               <Image style={styles.wall} source={{ uri: wall.url }} />
               <View style={styles.wallOverlay}>
                 <Text style={styles.wallTitle}>{wall.title}</Text>
-                <Ionicons
-                  size={24}
-                  name="heart-outline"
+                <AntDesign
+                  size={22}
+                  name="hearto"
                   color={lightColors.invertedText}
                 />
               </View>
