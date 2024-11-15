@@ -1,10 +1,10 @@
-export interface Wall {
+export interface IWall {
   id: number;
   title: string;
   url: string;
 }
 
-export const Walls: Wall[] = [
+export const Walls: IWall[] = [
   {
     id: 1,
     title: "Mountain At Night",

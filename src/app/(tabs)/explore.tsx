@@ -1,4 +1,3 @@
-import React from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import Animated, {
   interpolate,
@@ -8,8 +7,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 
-import { lightColors } from "@/src/constants/Colors";
 import { Walls } from "@/src/constants/Walls";
+import Carousel from "../components/Carousel";
+import { lightColors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
@@ -32,7 +32,7 @@ export default function Explore() {
           scale: interpolate(
             scrollOffset.value,
             [-IMG_HEIGHT, 0, IMG_HEIGHT],
-            [2, 1, 1]
+            [2, 1, 1.2]
           ),
         },
       ],
@@ -42,12 +42,7 @@ export default function Explore() {
   return (
     <View style={styles.container}>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
-        <Animated.Image
-          source={{
-            uri: "https://images.unsplash.com/photo-1603302576837-37561b2e2302",
-          }}
-          style={[styles.image, imageAnimatedStyle]}
-        />
+        <Carousel style={imageAnimatedStyle} />
 
         <View style={styles.walls}>
           {Walls.map((wall) => (
@@ -73,10 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: lightColors.secondaryBg,
-  },
-  image: {
-    width: width,
-    height: IMG_HEIGHT,
   },
   walls: {
     flexDirection: "row",
