@@ -6,9 +6,10 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 import { Walls } from "@/src/constants/Walls";
-import Carousel from "../components/Carousel";
+import Carousel from "@/src/components/Carousel";
 import { lightColors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");

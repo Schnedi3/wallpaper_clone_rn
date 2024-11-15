@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import Sheet from "../components/Sheet";
+import Sheet from "@/src/components/Sheet";
 
 export default function Account() {
   const [openSheet, setOpenSheet] = useState<boolean>(false);
