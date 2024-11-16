@@ -6,5 +6,5 @@ export const lightColors = {
   invertedText: "#fafafa",
   invertedTextDisabled: "#adadad",
   disabled: "#94a3b8",
-  accent: "#c026d3",
+  accent: "#43bbd9",
 };

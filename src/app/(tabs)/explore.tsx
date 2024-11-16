@@ -1,21 +1,32 @@
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
 } from "react-native-reanimated";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
-import { router } from "expo-router";
 
 import { Walls } from "@/src/constants/Walls";
 import Carousel from "@/src/components/Carousel";
+import Sheet from "@/src/components/Sheet";
 import { lightColors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
 
 export default function Explore() {
+  const [currentWall, setCurrentWall] = useState<string>("");
+  const [openSheet, setOpenSheet] = useState<boolean>(false);
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
 
@@ -40,15 +51,23 @@ export default function Explore() {
     };
   });
 
+  const handleWallPress = (wall: string) => {
+    setCurrentWall(wall);
+    setOpenSheet(true);
+  };
+
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         <Carousel style={imageAnimatedStyle} />
 
         <View style={styles.walls}>
           {Walls.map((wall) => (
             <View key={wall.id} style={styles.wallContainer}>
-              <Image style={styles.wall} source={{ uri: wall.url }} />
+              <Pressable onPress={() => handleWallPress(wall.url)}>
+                <Image style={styles.wall} source={{ uri: wall.url }} />
+              </Pressable>
+
               <View style={styles.wallOverlay}>
                 <Text style={styles.wallTitle}>{wall.title}</Text>
                 <AntDesign
@@ -61,14 +80,17 @@ export default function Explore() {
           ))}
         </View>
       </Animated.ScrollView>
-    </View>
+
+      {openSheet && (
+        <Sheet currentWall={currentWall} onClose={() => setOpenSheet(false)} />
+      )}
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: lightColors.secondaryBg,
   },
   walls: {
     flexDirection: "row",
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
   },
   wallContainer: {
     width: width / 2 - 30,
-    height: IMG_HEIGHT * 1.2,
+    height: IMG_HEIGHT * 1.1,
     borderRadius: 20,
     overflow: "hidden",
   },
