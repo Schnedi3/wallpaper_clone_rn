@@ -1,11 +1,19 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, useColorScheme, View } from "react-native";
 
-import { lightColors } from "@/src/constants/Colors";
 import TabBarButton from "./TabBarButton";
+import Colors from "@/src/constants/Colors";
 
 export default function TabBar({ state, descriptors, navigation }) {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
-    <View style={styles.tabBar}>
+    <View
+      style={[
+        styles.tabBar,
+        { backgroundColor: color.secondaryBg },
+      ]}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -49,6 +57,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.1)",
-    backgroundColor: lightColors.secondaryBg,
   },
 });

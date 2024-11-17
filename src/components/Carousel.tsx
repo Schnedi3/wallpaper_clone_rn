@@ -3,6 +3,7 @@ import {
   Image,
   StyleProp,
   StyleSheet,
+  useColorScheme,
   View,
   ViewStyle,
 } from "react-native";
@@ -14,13 +15,15 @@ import Animated, {
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { lightColors } from "@/src/constants/Colors";
 import { Walls } from "@/src/constants/Walls";
+import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
 export default function Carousel({ style }: { style: StyleProp<ViewStyle> }) {
   const scrollX = useSharedValue(0);
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
 
   return (
     <Animated.View style={style}>
@@ -74,7 +77,14 @@ export default function Carousel({ style }: { style: StyleProp<ViewStyle> }) {
           });
 
           return (
-            <Animated.View key={index} style={[styles.dot, animatedDotStyle]} />
+            <Animated.View
+              key={index}
+              style={[
+                styles.dot,
+                animatedDotStyle,
+                { backgroundColor: color.secondaryText },
+              ]}
+            />
           );
         })}
       </View>
@@ -104,6 +114,5 @@ const styles = StyleSheet.create({
     width: 7,
     height: 7,
     borderRadius: 20,
-    backgroundColor: lightColors.invertedText,
   },
 });

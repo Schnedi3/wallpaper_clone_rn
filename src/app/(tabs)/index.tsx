@@ -1,17 +1,25 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-import { lightColors } from "@/src/constants/Colors";
+import Colors from "@/src/constants/Colors";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function Home() {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: lightColors.accent,
-        tabBarInactiveTintColor: lightColors.disabled,
-        tabBarIndicatorStyle: { backgroundColor: lightColors.accent },
+        tabBarStyle: {
+          backgroundColor: color.secondaryBg,
+        },
+        tabBarActiveTintColor: color.accent,
+        tabBarInactiveTintColor: color.disabled,
+        tabBarIndicatorStyle: {
+          backgroundColor: color.accent,
+        },
       }}
     >
       <Tab.Screen name="suggested" component={SuggestedScreen} />
@@ -21,23 +29,36 @@ export default function Home() {
   );
 }
 function SuggestedScreen() {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Suggested</Text>
+    <View style={[styles.container, { backgroundColor: color.primaryBg }]}>
+      <Text style={[styles.title, { color: color.primaryText }]}>
+        Suggested
+      </Text>
     </View>
   );
 }
+
 function LikedScreen() {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Liked</Text>
+    <View style={[styles.container, { backgroundColor: color.primaryBg }]}>
+      <Text style={[styles.title, { color: color.primaryText }]}>Liked</Text>
     </View>
   );
 }
+
 function LibraryScreen() {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Library</Text>
+    <View style={[styles.container, { backgroundColor: color.primaryBg }]}>
+      <Text style={[styles.title, { color: color.primaryText }]}>Library</Text>
     </View>
   );
 }

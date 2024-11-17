@@ -1,9 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
+
+import Colors from "@/src/constants/Colors";
 
 export default function Account() {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Account</Text>
+    <View style={[styles.container, { backgroundColor: color.primaryBg }]}>
+      <Text style={[styles.title, { color: color.primaryText }]}>Account</Text>
     </View>
   );
 }

@@ -5,6 +5,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
 } from "react-native";
 import Animated, {
@@ -19,7 +20,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Walls } from "@/src/constants/Walls";
 import Carousel from "@/src/components/Carousel";
 import Sheet from "@/src/components/Sheet";
-import { lightColors } from "@/src/constants/Colors";
+import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
@@ -29,6 +30,8 @@ export default function Explore() {
   const [openSheet, setOpenSheet] = useState<boolean>(false);
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -61,19 +64,29 @@ export default function Explore() {
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         <Carousel style={imageAnimatedStyle} />
 
-        <View style={styles.walls}>
+        <View style={[styles.walls, { backgroundColor: color.primaryBg }]}>
           {Walls.map((wall) => (
-            <View key={wall.id} style={styles.wallContainer}>
+            <View
+              key={wall.id}
+              style={[
+                styles.wallContainer,
+                { backgroundColor: color.primaryBg },
+              ]}
+            >
               <Pressable onPress={() => handleWallPress(wall.url)}>
                 <Image style={styles.wall} source={{ uri: wall.url }} />
               </Pressable>
 
               <View style={styles.wallOverlay}>
-                <Text style={styles.wallTitle}>{wall.title}</Text>
+                <Text
+                  style={[styles.wallTitle, { color: color.secondaryText }]}
+                >
+                  {wall.title}
+                </Text>
                 <AntDesign
                   size={22}
                   name="hearto"
-                  color={lightColors.invertedText}
+                  color={color.secondaryText}
                 />
               </View>
             </View>
@@ -97,7 +110,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     gap: 15,
-    backgroundColor: lightColors.secondaryBg,
     padding: 20,
   },
   wallContainer: {
@@ -123,6 +135,5 @@ const styles = StyleSheet.create({
   },
   wallTitle: {
     textAlign: "center",
-    color: lightColors.invertedText,
   },
 });

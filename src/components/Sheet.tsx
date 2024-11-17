@@ -5,15 +5,16 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
 } from "react-native";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-
-import { lightColors } from "@/src/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
+
+import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
@@ -23,11 +24,19 @@ interface ISheetProps {
 }
 
 export default function Sheet({ currentWall, onClose }: ISheetProps) {
+  const colorTheme = useColorScheme();
+  const color = Colors[colorTheme ?? "light"];
+
   return (
     <BottomSheet
       enablePanDownToClose={true}
       onClose={onClose}
-      handleIndicatorStyle={{ backgroundColor: lightColors.disabled }}
+      handleStyle={{
+        backgroundColor: color.primaryBg,
+      }}
+      handleIndicatorStyle={{
+        backgroundColor: color.disabled,
+      }}
       backdropComponent={(props) => (
         <BottomSheetBackdrop
           opacity={0.8}
@@ -37,25 +46,41 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
         />
       )}
     >
-      <BottomSheetView style={styles.sheetContainer}>
+      <BottomSheetView
+        style={[styles.sheetContainer, { backgroundColor: color.primaryBg }]}
+      >
         <View style={styles.buttonsContainer}>
           <Pressable
             style={({ pressed }) => [
               styles.button,
-              pressed && styles.buttonPressed,
+              { borderColor: color.primaryText },
+              pressed && {
+                borderColor: color.accent,
+                backgroundColor: color.accent,
+              },
             ]}
           >
-            <AntDesign name="download" style={styles.buttonIcon} />
-            <Text style={styles.buttonText}>Save</Text>
+            <AntDesign
+              name="download"
+              style={[styles.buttonIcon, { color: color.primaryText }]}
+            />
+            <Text style={{ color: color.primaryText }}>Save</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [
               styles.button,
-              pressed && styles.buttonPressed,
+              { borderColor: color.primaryText },
+              pressed && {
+                borderColor: color.accent,
+                backgroundColor: color.accent,
+              },
             ]}
           >
-            <AntDesign name="sharealt" style={styles.buttonIcon} />
-            <Text>Share</Text>
+            <AntDesign
+              name="sharealt"
+              style={[styles.buttonIcon, { color: color.primaryText }]}
+            />
+            <Text style={{ color: color.primaryText }}>Share</Text>
           </Pressable>
         </View>
         <Image style={styles.wall} source={{ uri: currentWall }} />
@@ -83,19 +108,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     gap: 10,
     borderWidth: 1,
-    borderColor: lightColors.primaryText,
     borderRadius: 50,
-  },
-  buttonPressed: {
-    borderColor: lightColors.accent,
-    backgroundColor: lightColors.accent,
   },
   buttonIcon: {
     fontSize: 20,
-    color: lightColors.primaryText,
-  },
-  buttonText: {
-    color: lightColors.primaryText,
   },
   wall: {
     width: width - 40,
