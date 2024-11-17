@@ -10,8 +10,8 @@ export default {
     accent: "#0ea5e9",
   },
   dark: {
-    primaryBg: "#18181b",
-    secondaryBg: "#27272a",
+    primaryBg: "#27272a",
+    secondaryBg: "#18181b",
     primaryText: "#fafafa",
     secondaryText: "#d4d4d8",
     invertedText: "#1e293b",
