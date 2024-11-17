@@ -1,7 +1,9 @@
-// import { useCallback } from "react";
+import { useState } from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -13,6 +15,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import * as FileSystem from "expo-file-system";
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "@/src/constants/Colors";
@@ -25,8 +28,56 @@ interface ISheetProps {
 }
 
 export default function Sheet({ currentWall, onClose }: ISheetProps) {
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
+
+  const handleDownloadImage = async () => {
+    const filename = currentWall.split("/").pop() || "";
+
+    setIsDownloading(true);
+    try {
+      const result = await FileSystem.downloadAsync(
+        currentWall,
+        `${FileSystem.documentDirectory}${filename}`
+      );
+
+      setIsDownloading(false);
+      saveDownloadedImage(result.uri, filename, result.headers["content-type"]);
+    } catch (error: any) {
+      setIsDownloading(false);
+      console.log(error.message);
+    }
+  };
+
+  const saveDownloadedImage = async (
+    uri: string,
+    filename: string,
+    mymetype: string
+  ) => {
+    if (Platform.OS === "android") {
+      const permissions =
+        await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+
+      if (!permissions.granted) {
+        return;
+      }
+
+      const base64 = await FileSystem.readAsStringAsync(uri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      await FileSystem.StorageAccessFramework.createFileAsync(
+        permissions.directoryUri,
+        filename,
+        mymetype
+      ).then(async (uri) => {
+        await FileSystem.writeAsStringAsync(uri, base64, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+      });
+    }
+  };
 
   return (
     <BottomSheet
@@ -34,6 +85,8 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
       onClose={onClose}
       handleStyle={{
         backgroundColor: color.primaryBg,
+        borderTopLeftRadius: 14,
+        borderTopRightRadius: 14,
       }}
       handleIndicatorStyle={{
         backgroundColor: color.disabled,
@@ -61,12 +114,19 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
                   backgroundColor: color.accent,
                 },
               ]}
+              onPress={handleDownloadImage}
             >
-              <AntDesign
-                name="download"
-                style={[styles.buttonIcon, { color: color.primaryText }]}
-              />
-              <Text style={{ color: color.primaryText }}>Save</Text>
+              {isDownloading ? (
+                <ActivityIndicator size="small" color={color.primaryText} />
+              ) : (
+                <AntDesign
+                  name="download"
+                  style={[styles.buttonIcon, { color: color.primaryText }]}
+                />
+              )}
+              <Text style={{ color: color.primaryText }}>
+                {isDownloading ? "Saving..." : "Save"}
+              </Text>
             </Pressable>
           </Animated.View>
           <Animated.View entering={FadeInDown.springify().delay(100)}>
