@@ -12,6 +12,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "@/src/constants/Colors";
@@ -50,40 +51,46 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
         style={[styles.sheetContainer, { backgroundColor: color.primaryBg }]}
       >
         <View style={styles.buttonsContainer}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.button,
-              { borderColor: color.primaryText },
-              pressed && {
-                borderColor: color.accent,
-                backgroundColor: color.accent,
-              },
-            ]}
-          >
-            <AntDesign
-              name="download"
-              style={[styles.buttonIcon, { color: color.primaryText }]}
-            />
-            <Text style={{ color: color.primaryText }}>Save</Text>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [
-              styles.button,
-              { borderColor: color.primaryText },
-              pressed && {
-                borderColor: color.accent,
-                backgroundColor: color.accent,
-              },
-            ]}
-          >
-            <AntDesign
-              name="sharealt"
-              style={[styles.buttonIcon, { color: color.primaryText }]}
-            />
-            <Text style={{ color: color.primaryText }}>Share</Text>
-          </Pressable>
+          <Animated.View entering={FadeInDown.springify()}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.button,
+                { borderColor: color.primaryText },
+                pressed && {
+                  borderColor: color.accent,
+                  backgroundColor: color.accent,
+                },
+              ]}
+            >
+              <AntDesign
+                name="download"
+                style={[styles.buttonIcon, { color: color.primaryText }]}
+              />
+              <Text style={{ color: color.primaryText }}>Save</Text>
+            </Pressable>
+          </Animated.View>
+          <Animated.View entering={FadeInDown.springify().delay(100)}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.button,
+                { borderColor: color.primaryText },
+                pressed && {
+                  borderColor: color.accent,
+                  backgroundColor: color.accent,
+                },
+              ]}
+            >
+              <AntDesign
+                name="sharealt"
+                style={[styles.buttonIcon, { color: color.primaryText }]}
+              />
+              <Text style={{ color: color.primaryText }}>Share</Text>
+            </Pressable>
+          </Animated.View>
         </View>
-        <Image style={styles.wall} source={{ uri: currentWall }} />
+        <Animated.View entering={FadeInDown.springify().delay(200)}>
+          <Image style={styles.wall} source={{ uri: currentWall }} />
+        </Animated.View>
       </BottomSheetView>
     </BottomSheet>
   );
