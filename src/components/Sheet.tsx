@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -15,6 +14,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -29,54 +29,29 @@ interface ISheetProps {
 
 export default function Sheet({ currentWall, onClose }: ISheetProps) {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
   const handleDownloadImage = async () => {
-    const filename = currentWall.split("/").pop() || "";
-
     setIsDownloading(true);
-    try {
-      const result = await FileSystem.downloadAsync(
-        currentWall,
-        `${FileSystem.documentDirectory}${filename}`
-      );
+    const filename = currentWall.split("/").pop();
 
-      setIsDownloading(false);
-      saveDownloadedImage(result.uri, filename, result.headers["content-type"]);
-    } catch (error: any) {
-      setIsDownloading(false);
-      console.log(error.message);
+    if (permissionResponse?.status !== "granted") {
+      await requestPermission();
     }
-  };
 
-  const saveDownloadedImage = async (
-    uri: string,
-    filename: string,
-    mymetype: string
-  ) => {
-    if (Platform.OS === "android") {
-      const permissions =
-        await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+    const fileUri = FileSystem.documentDirectory + `${filename}`;
+    const { uri } = await FileSystem.downloadAsync(currentWall, fileUri);
 
-      if (!permissions.granted) {
-        return;
-      }
-
-      const base64 = await FileSystem.readAsStringAsync(uri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
-      await FileSystem.StorageAccessFramework.createFileAsync(
-        permissions.directoryUri,
-        filename,
-        mymetype
-      ).then(async (uri) => {
-        await FileSystem.writeAsStringAsync(uri, base64, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
-      });
+    const asset = await MediaLibrary.createAssetAsync(uri);
+    if (asset) {
+      console.log("Image downloaded successfully!");
+    } else {
+      console.log("Something went wrong!");
     }
+
+    setIsDownloading(false);
   };
 
   return (
