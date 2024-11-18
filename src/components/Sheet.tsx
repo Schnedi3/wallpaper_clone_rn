@@ -18,6 +18,7 @@ import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 import { AntDesign } from "@expo/vector-icons";
 
+import Toast from "@/src/components/Toast";
 import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
@@ -30,6 +31,8 @@ interface ISheetProps {
 export default function Sheet({ currentWall, onClose }: ISheetProps) {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+  const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
@@ -46,12 +49,21 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
 
     const asset = await MediaLibrary.createAssetAsync(uri);
     if (asset) {
-      console.log("Image downloaded successfully!");
+      setIsDownloaded(true);
+      handleToast();
     } else {
-      console.log("Something went wrong!");
+      setIsDownloaded(false);
+      console.log("There was an error!");
     }
 
     setIsDownloading(false);
+  };
+
+  const handleToast = () => {
+    setVisible(true);
+    setTimeout(() => {
+      setVisible(false);
+    }, 2500);
   };
 
   return (
@@ -75,6 +87,15 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
         />
       )}
     >
+      {isDownloaded && (
+        <View style={styles.toastContainer}>
+          <Toast
+            type="success"
+            message="Image downloaded successfully!"
+            visible={visible}
+          />
+        </View>
+      )}
       <BottomSheetView
         style={[styles.sheetContainer, { backgroundColor: color.primaryBg }]}
       >
@@ -114,6 +135,7 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
                   backgroundColor: color.accent,
                 },
               ]}
+              onPress={handleToast}
             >
               <AntDesign
                 name="sharealt"
@@ -139,16 +161,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
   },
+  toastContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: -60,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   buttonsContainer: {
     flexDirection: "row",
     gap: 20,
-    alignSelf: "flex-start",
   },
   button: {
-    flexDirection: "row",
+    width: width / 2 - 40,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    gap: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 20,
     borderWidth: 1,
     borderRadius: 50,
   },
