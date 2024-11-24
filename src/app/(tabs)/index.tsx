@@ -18,8 +18,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
 import { Walls } from "@/src/constants/Walls";
-import Carousel from "@/src/components/Carousel";
-import Sheet from "@/src/components/Sheet";
+import Carousel from "@/src/components/Home/Carousel";
+import Sheet from "@/src/components/Home/Sheet";
 import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
