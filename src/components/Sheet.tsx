@@ -125,7 +125,7 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
               </Text>
             </Pressable>
           </Animated.View>
-          <Animated.View entering={FadeInDown.springify().delay(100)}>
+          <Animated.View entering={FadeInDown.springify().delay(150)}>
             <Pressable
               style={({ pressed }) => [
                 styles.button,
@@ -145,7 +145,7 @@ export default function Sheet({ currentWall, onClose }: ISheetProps) {
             </Pressable>
           </Animated.View>
         </View>
-        <Animated.View entering={FadeInDown.springify().delay(200)}>
+        <Animated.View entering={FadeInDown.springify().delay(300)}>
           <Image style={styles.wall} source={{ uri: currentWall }} />
         </Animated.View>
       </BottomSheetView>
