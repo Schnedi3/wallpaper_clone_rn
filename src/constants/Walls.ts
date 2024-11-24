@@ -1,8 +1,4 @@
-export interface IWall {
-  id: number;
-  title: string;
-  url: string;
-}
+import { IWall } from "../types/types";
 
 export const Walls: IWall[] = [
   {

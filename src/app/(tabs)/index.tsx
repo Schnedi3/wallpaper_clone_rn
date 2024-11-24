@@ -20,6 +20,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Walls } from "@/src/constants/Walls";
 import Carousel from "@/src/components/Home/Carousel";
 import Sheet from "@/src/components/Home/Sheet";
+import { useLikedStore } from "@/src/store/likedStore";
 import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
@@ -28,6 +29,8 @@ const IMG_HEIGHT = 300;
 export default function Home() {
   const [currentWall, setCurrentWall] = useState<string>("");
   const [openSheet, setOpenSheet] = useState<boolean>(false);
+  const { liked, addToLiked } = useLikedStore();
+
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const colorTheme = useColorScheme();
@@ -65,32 +68,36 @@ export default function Home() {
         <Carousel style={imageAnimatedStyle} />
 
         <View style={[styles.walls, { backgroundColor: color.primaryBg }]}>
-          {Walls.map((wall) => (
-            <View
-              key={wall.id}
-              style={[
-                styles.wallContainer,
-                { backgroundColor: color.primaryBg },
-              ]}
-            >
-              <Pressable onPress={() => handleWallPress(wall.url)}>
-                <Image style={styles.wall} source={{ uri: wall.url }} />
-              </Pressable>
+          {Walls.map((wall) => {
+            const likedWall = liked.find((w) => w.id === wall.id);
+            return (
+              <View
+                key={wall.id}
+                style={[
+                  styles.wallContainer,
+                  { backgroundColor: color.primaryBg },
+                ]}
+              >
+                <Pressable onPress={() => handleWallPress(wall.url)}>
+                  <Image style={styles.wall} source={{ uri: wall.url }} />
+                </Pressable>
 
-              <View style={styles.wallOverlay}>
-                <Text
-                  style={[styles.wallTitle, { color: color.secondaryText }]}
-                >
-                  {wall.title}
-                </Text>
-                <AntDesign
-                  size={22}
-                  name="hearto"
-                  color={color.secondaryText}
-                />
+                <View style={styles.wallOverlay}>
+                  <Text
+                    style={[styles.wallTitle, { color: color.secondaryText }]}
+                  >
+                    {wall.title}
+                  </Text>
+                  <AntDesign
+                    size={22}
+                    name={likedWall ? "heart" : "hearto"}
+                    color={color.secondaryText}
+                    onPress={() => addToLiked(wall)}
+                  />
+                </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       </Animated.ScrollView>
 
