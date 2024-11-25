@@ -3,7 +3,7 @@ import { Tabs } from "expo-router";
 
 import TabBar from "@/src/components/TabBar";
 
-export default function TabLayout() {
+export default function TabLayout(): JSX.Element {
   return (
     <Tabs
       tabBar={(props) => <TabBar {...props} />}

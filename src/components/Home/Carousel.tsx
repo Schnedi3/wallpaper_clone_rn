@@ -20,7 +20,7 @@ import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
-export default function Carousel({ style }: { style: StyleProp<ViewStyle> }) {
+export default function Carousel({ style }: { style: StyleProp<ViewStyle> }): JSX.Element {
   const scrollX = useSharedValue(0);
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];

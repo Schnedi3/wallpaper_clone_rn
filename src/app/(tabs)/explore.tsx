@@ -7,7 +7,7 @@ import Colors from "@/src/constants/Colors";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function Explore() {
+export default function Explore(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 

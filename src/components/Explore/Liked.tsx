@@ -10,7 +10,7 @@ import { useLikedStore } from "@/src/store/likedStore";
 import WallImage from "./WallImage";
 import Colors from "@/src/constants/Colors";
 
-export default function Liked() {
+export default function Liked(): JSX.Element {
   const { liked } = useLikedStore();
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];

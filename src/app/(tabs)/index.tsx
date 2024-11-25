@@ -26,7 +26,7 @@ import Colors from "@/src/constants/Colors";
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const [currentWall, setCurrentWall] = useState<string>("");
   const [openSheet, setOpenSheet] = useState<boolean>(false);
   const { liked, addToLiked } = useLikedStore();

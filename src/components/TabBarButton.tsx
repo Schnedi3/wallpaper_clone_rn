@@ -10,8 +10,20 @@ import Animated, {
 import { tabBarIcons } from "@/src/constants/tabBarIcons";
 import Colors from "@/src/constants/Colors";
 
-export default function TabBarButton(props) {
-  const { isFocused, label, routeName } = props;
+interface ITabBarButtonProps {
+  onPress: () => void;
+  isFocused: boolean;
+  label: string;
+  routeName: "index" | "explore" | "account";
+  props: any;
+}
+
+export default function TabBarButton({
+  isFocused,
+  label,
+  routeName,
+  ...props
+}: ITabBarButtonProps): JSX.Element {
   const scale = useSharedValue(0);
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];

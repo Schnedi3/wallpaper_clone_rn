@@ -9,7 +9,7 @@ import {
 
 import Colors from "../constants/Colors";
 
-export default function RootLayout() {
+export default function RootLayout(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 

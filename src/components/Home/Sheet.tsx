@@ -28,7 +28,7 @@ interface ISheetProps {
   onClose: () => void;
 }
 
-export default function Sheet({ currentWall, onClose }: ISheetProps) {
+export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Element {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [isDownloaded, setIsDownloaded] = useState<boolean>(false);

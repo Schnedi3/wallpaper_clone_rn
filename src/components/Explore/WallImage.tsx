@@ -15,7 +15,7 @@ import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
-export default function WallImage({ wall }: { wall: IWall }) {
+export default function WallImage({ wall }: { wall: IWall }): JSX.Element {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
   const { removeFromLiked } = useLikedStore();
   const colorTheme = useColorScheme();

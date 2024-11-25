@@ -1,20 +1,20 @@
 import { StyleSheet, useColorScheme, View } from "react-native";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 import TabBarButton from "./TabBarButton";
 import Colors from "@/src/constants/Colors";
 
-export default function TabBar({ state, descriptors, navigation }) {
+export default function TabBar({
+  state,
+  descriptors,
+  navigation,
+}: BottomTabBarProps): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
   return (
-    <View
-      style={[
-        styles.tabBar,
-        { backgroundColor: color.secondaryBg },
-      ]}
-    >
-      {state.routes.map((route, index) => {
+    <View style={[styles.tabBar, { backgroundColor: color.secondaryBg }]}>
+      {state.routes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
@@ -44,6 +44,7 @@ export default function TabBar({ state, descriptors, navigation }) {
             isFocused={isFocused}
             label={label}
             routeName={route.name}
+            props
           />
         );
       })}

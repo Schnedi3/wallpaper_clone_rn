@@ -2,7 +2,7 @@ import { StyleSheet, Text, useColorScheme, View } from "react-native";
 
 import Colors from "@/src/constants/Colors";
 
-export default function Account() {
+export default function Account(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 

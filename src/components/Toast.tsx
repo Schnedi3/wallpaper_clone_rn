@@ -21,7 +21,7 @@ const toastColor = {
   error: "#cf6b6b",
 };
 
-export default function Toast({ type, message, visible }: IToastProps) {
+export default function Toast({ type, message, visible }: IToastProps): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
   const YValue = useSharedValue(0);
