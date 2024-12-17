@@ -1,11 +1,14 @@
 import { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
   Pressable,
+  Share,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from "react-native";
@@ -28,7 +31,10 @@ interface ISheetProps {
   onClose: () => void;
 }
 
-export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Element {
+export default function Sheet({
+  currentWall,
+  onClose,
+}: ISheetProps): JSX.Element {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
@@ -59,6 +65,14 @@ export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Elemen
     setIsDownloading(false);
   };
 
+  const handleShare = async () => {
+    try {
+      await Share.share({ message: "Check out this wall!" });
+    } catch (error) {
+      Alert.alert("Error", "Failed to share Image");
+    }
+  };
+
   const handleToast = () => {
     setVisible(true);
     setTimeout(() => {
@@ -68,8 +82,6 @@ export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Elemen
 
   return (
     <BottomSheet
-      enablePanDownToClose={true}
-      onClose={onClose}
       handleStyle={{
         backgroundColor: color.primaryBg,
         borderTopLeftRadius: 14,
@@ -86,6 +98,8 @@ export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Elemen
           {...props}
         />
       )}
+      enablePanDownToClose={true}
+      onClose={onClose}
     >
       {isDownloaded && (
         <View style={styles.toastContainer}>
@@ -101,15 +115,9 @@ export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Elemen
       >
         <View style={styles.buttonsContainer}>
           <Animated.View entering={FadeInDown.springify()}>
-            <Pressable
-              style={({ pressed }) => [
-                styles.button,
-                { borderColor: color.primaryText },
-                pressed && {
-                  borderColor: color.accent,
-                  backgroundColor: color.accent,
-                },
-              ]}
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={[styles.button, { borderColor: color.disabled }]}
               onPress={handleDownloadImage}
             >
               {isDownloading ? (
@@ -123,26 +131,20 @@ export default function Sheet({ currentWall, onClose }: ISheetProps): JSX.Elemen
               <Text style={{ color: color.primaryText }}>
                 {isDownloading ? "Saving..." : "Save"}
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View entering={FadeInDown.springify().delay(150)}>
-            <Pressable
-              style={({ pressed }) => [
-                styles.button,
-                { borderColor: color.primaryText },
-                pressed && {
-                  borderColor: color.accent,
-                  backgroundColor: color.accent,
-                },
-              ]}
-              onPress={handleToast}
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={[styles.button, { borderColor: color.disabled }]}
+              onPress={handleShare}
             >
               <AntDesign
                 name="sharealt"
                 style={[styles.buttonIcon, { color: color.primaryText }]}
               />
               <Text style={{ color: color.primaryText }}>Share</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Animated.View>
         </View>
         <Animated.View entering={FadeInDown.springify().delay(300)}>
