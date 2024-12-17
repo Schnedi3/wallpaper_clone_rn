@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 
-import Colors from "../constants/Colors";
+import Colors from "@/src/constants/Colors";
 
 export default function RootLayout(): JSX.Element {
   const colorTheme = useColorScheme();

@@ -12,8 +12,10 @@ import {
 import { IWall } from "@/src/types/types";
 import { useLikedStore } from "@/src/store/likedStore";
 import Colors from "@/src/constants/Colors";
+import Animated, { FadeOut } from "react-native-reanimated";
 
 const { width } = Dimensions.get("window");
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function WallImage({ wall }: { wall: IWall }): JSX.Element {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
@@ -28,9 +30,9 @@ export default function WallImage({ wall }: { wall: IWall }): JSX.Element {
 
   return (
     <View>
-      <Pressable onPress={() => setOpenOverlay(true)}>
+      <AnimatedPressable onPress={() => setOpenOverlay(true)} exiting={FadeOut}>
         <Image style={styles.image} source={{ uri: wall.url }} key={wall.id} />
-      </Pressable>
+      </AnimatedPressable>
 
       {openOverlay && (
         <Pressable style={styles.overlay} onPress={() => setOpenOverlay(false)}>

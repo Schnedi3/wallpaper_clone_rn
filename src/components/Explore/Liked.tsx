@@ -15,25 +15,24 @@ export default function Liked(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
+  if (liked.length === 0) {
+    return (
+      <View
+        style={[styles.emptyContainer, { backgroundColor: color.primaryBg }]}
+      >
+        <Text style={[styles.empty, { color: color.primaryText }]}>Liked</Text>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView>
-      {liked.length > 0 ? (
-        <View
-          style={[styles.WallsContainer, { backgroundColor: color.primaryBg }]}
-        >
-          {liked.map((wall) => (
-            <WallImage wall={wall} key={wall.id} />
-          ))}
-        </View>
-      ) : (
-        <View
-          style={[styles.emptyContainer, { backgroundColor: color.primaryBg }]}
-        >
-          <Text style={[styles.empty, { color: color.primaryText }]}>
-            Liked
-          </Text>
-        </View>
-      )}
+    <ScrollView
+      style={{ backgroundColor: color.primaryBg }}
+      contentContainerStyle={styles.WallsContainer}
+    >
+      {liked.map((wall) => (
+        <WallImage wall={wall} key={wall.id} />
+      ))}
     </ScrollView>
   );
 }
