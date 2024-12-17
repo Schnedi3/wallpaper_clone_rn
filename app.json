@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "bottom-top-bars",
+    "name": "wallpaper-clone",
     "owner": "schnedi",
-    "slug": "bottom-top-bars",
+    "slug": "wallpaper-clone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,7 +29,7 @@
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.ACCESS_MEDIA_LOCATION"
       ],
-      "package": "com.schnedi.bottomtopbars"
+      "package": "com.schnedi.wallpaperclone"
     },
     "web": {
       "bundler": "metro",
@@ -42,15 +42,14 @@
       [
         "expo-media-library",
         {
-          "photosPermission": "Allow Bottom Top bars App to access your photos.",
-          "savePhotosPermission": "Allow Bottom Top bars App to save photos.",
+          "photosPermission": "Allow Wallpaper Clone to access your photos.",
+          "savePhotosPermission": "Allow Wallpaper Clone to save photos.",
           "isAccessMediaLocationEnabled": true
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "newArchEnabled": true
+    }
   }
 }

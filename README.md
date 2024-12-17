@@ -1,0 +1,3 @@
+# Wallpaper Clone
+- Expo
+- TypeScript
