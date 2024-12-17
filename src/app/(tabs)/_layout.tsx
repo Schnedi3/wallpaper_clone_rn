@@ -7,7 +7,7 @@ export default function TabLayout(): JSX.Element {
   return (
     <Tabs
       tabBar={(props) => <TabBar {...props} />}
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: false, animation: "shift" }}
     >
       <Tabs.Screen name="explore" options={{ title: "Explore" }} />
       <Tabs.Screen name="index" options={{ title: "Home" }} />

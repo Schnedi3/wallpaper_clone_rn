@@ -8,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 
-import Colors from "../constants/Colors";
+import { Colors } from "../constants/Colors";
 
 interface IToastProps {
   type: "success" | "error";
@@ -21,7 +21,11 @@ const toastColor = {
   error: "#cf6b6b",
 };
 
-export default function Toast({ type, message, visible }: IToastProps): JSX.Element {
+export default function Toast({
+  type,
+  message,
+  visible,
+}: IToastProps): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
   const YValue = useSharedValue(0);
@@ -87,6 +91,7 @@ const styles = StyleSheet.create({
     gap: 25,
   },
   toastMessage: {
+    fontFamily: "QuicksandMed",
     fontSize: 15,
   },
 });

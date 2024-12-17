@@ -2,7 +2,7 @@ import { StyleSheet, useColorScheme, View } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 import TabBarButton from "./TabBarButton";
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 export default function TabBar({
   state,

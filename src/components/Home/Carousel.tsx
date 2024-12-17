@@ -16,7 +16,7 @@ import Animated, {
 import { LinearGradient } from "expo-linear-gradient";
 
 import { Walls } from "@/assets/data/Walls";
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 

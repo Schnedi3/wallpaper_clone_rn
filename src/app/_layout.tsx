@@ -1,21 +1,27 @@
-import { StatusBar, StyleSheet, useColorScheme } from "react-native";
+import { StatusBar, StyleSheet, useColorScheme, View } from "react-native";
 import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 export default function RootLayout(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
+  useFonts({
+    QuicksandBold: require("@/assets/fonts/Quicksand-Bold.ttf"),
+    QuicksandMed: require("@/assets/fonts/Quicksand-Medium.ttf"),
+    QuicksandSemi: require("@/assets/fonts/Quicksand-SemiBold.ttf"),
+  });
+
   return (
     <ThemeProvider value={colorTheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
         </Stack>
@@ -23,7 +29,7 @@ export default function RootLayout(): JSX.Element {
           backgroundColor={color.secondaryBg}
           barStyle={colorTheme === "dark" ? "light-content" : "dark-content"}
         />
-      </SafeAreaView>
+      </View>
     </ThemeProvider>
   );
 }

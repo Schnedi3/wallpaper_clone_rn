@@ -1,4 +1,4 @@
-export default {
+export const Colors = {
   light: {
     primaryBg: "#fafafa",
     secondaryBg: "#ffffff",

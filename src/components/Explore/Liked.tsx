@@ -8,7 +8,7 @@ import {
 
 import { useLikedStore } from "@/src/store/likedStore";
 import WallImage from "./WallImage";
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 export default function Liked(): JSX.Element {
   const { liked } = useLikedStore();
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   empty: {
-    fontSize: 60,
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
+    fontSize: 55,
     opacity: 0.4,
   },
 });

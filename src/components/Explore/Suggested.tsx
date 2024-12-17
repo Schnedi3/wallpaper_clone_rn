@@ -1,6 +1,6 @@
 import { StyleSheet, Text, useColorScheme, View } from "react-native";
 
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 export default function Suggested(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 60,
-    fontWeight: "bold",
+    fontFamily: "QuicksandBold",
+    fontSize: 55,
     opacity: 0.4,
   },
 });

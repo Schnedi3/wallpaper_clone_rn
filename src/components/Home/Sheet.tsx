@@ -22,7 +22,7 @@ import * as FileSystem from "expo-file-system";
 import { AntDesign } from "@expo/vector-icons";
 
 import Toast from "@/src/components/Toast";
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
@@ -130,7 +130,9 @@ export default function Sheet({
                   style={[styles.buttonIcon, { color: color.primaryText }]}
                 />
               )}
-              <Text style={{ color: color.primaryText }}>
+              <Text
+                style={{ fontFamily: "QuicksandMed", color: color.primaryText }}
+              >
                 {isDownloading ? "Saving..." : "Save"}
               </Text>
             </TouchableOpacity>
@@ -145,7 +147,11 @@ export default function Sheet({
                 name="sharealt"
                 style={[styles.buttonIcon, { color: color.primaryText }]}
               />
-              <Text style={{ color: color.primaryText }}>Share</Text>
+              <Text
+                style={{ fontFamily: "QuicksandMed", color: color.primaryText }}
+              >
+                Share
+              </Text>
             </TouchableOpacity>
           </Animated.View>
         </View>

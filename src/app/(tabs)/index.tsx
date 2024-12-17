@@ -21,7 +21,7 @@ import { Walls } from "@/assets/data/Walls";
 import Carousel from "@/src/components/Home/Carousel";
 import Sheet from "@/src/components/Home/Sheet";
 import { useLikedStore } from "@/src/store/likedStore";
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   wallTitle: {
+    fontFamily: "QuicksandMed",
     textAlign: "center",
   },
 });

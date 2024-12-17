@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 import Liked from "@/src/components/Explore/Liked";
 import Suggested from "@/src/components/Explore/Suggested";
-import Colors from "@/src/constants/Colors";
+import { Colors } from "@/src/constants/Colors";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -24,8 +24,22 @@ export default function Explore(): JSX.Element {
         },
       }}
     >
-      <Tab.Screen name="liked" component={Liked} />
-      <Tab.Screen name="suggested" component={Suggested} />
+      <Tab.Screen
+        name="liked"
+        options={{
+          title: "Liked",
+          tabBarLabelStyle: { fontFamily: "QuicksandSemi" },
+        }}
+        component={Liked}
+      />
+      <Tab.Screen
+        name="suggested"
+        options={{
+          title: "Suggested",
+          tabBarLabelStyle: { fontFamily: "QuicksandSemi" },
+        }}
+        component={Suggested}
+      />
     </Tab.Navigator>
   );
 }
