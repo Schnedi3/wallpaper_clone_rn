@@ -1,4 +1,4 @@
-import { IWall } from "../types/types";
+import { IWall } from "@/src/types/types";
 
 export const Walls: IWall[] = [
   {

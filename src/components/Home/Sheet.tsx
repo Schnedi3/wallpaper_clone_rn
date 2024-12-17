@@ -82,6 +82,7 @@ export default function Sheet({
 
   return (
     <BottomSheet
+      snapPoints={["45%"]}
       handleStyle={{
         backgroundColor: color.primaryBg,
         borderTopLeftRadius: 14,
@@ -100,6 +101,7 @@ export default function Sheet({
       )}
       enablePanDownToClose={true}
       onClose={onClose}
+      enableOverDrag={false}
     >
       {isDownloaded && (
         <View style={styles.toastContainer}>

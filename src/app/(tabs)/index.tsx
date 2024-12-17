@@ -17,7 +17,7 @@ import Animated, {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
-import { Walls } from "@/src/constants/Walls";
+import { Walls } from "@/assets/data/Walls";
 import Carousel from "@/src/components/Home/Carousel";
 import Sheet from "@/src/components/Home/Sheet";
 import { useLikedStore } from "@/src/store/likedStore";

@@ -15,12 +15,16 @@ import Animated, {
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { Walls } from "@/src/constants/Walls";
+import { Walls } from "@/assets/data/Walls";
 import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
-export default function Carousel({ style }: { style: StyleProp<ViewStyle> }): JSX.Element {
+export default function Carousel({
+  style,
+}: {
+  style: StyleProp<ViewStyle>;
+}): JSX.Element {
   const scrollX = useSharedValue(0);
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
@@ -33,7 +37,7 @@ export default function Carousel({ style }: { style: StyleProp<ViewStyle> }): JS
           <View>
             <Image style={styles.image} source={{ uri: wall.url }} />
             <LinearGradient
-              colors={["transparent", "rgba(0,0,0,0.8)"]}
+              colors={["transparent", "rgba(0, 0, 0, 0.5)"]}
               style={styles.background}
             />
           </View>
