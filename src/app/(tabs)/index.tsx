@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -9,26 +9,27 @@ import {
   View,
 } from "react-native";
 import Animated, {
+  Easing,
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
 import { Walls } from "@/assets/data/Walls";
-import Carousel from "@/src/components/Home/Carousel";
-import Sheet from "@/src/components/Home/Sheet";
+import Carousel from "@/src/components/Carousel";
 import { useLikedStore } from "@/src/store/likedStore";
 import { Colors } from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Home(): JSX.Element {
-  const [currentWall, setCurrentWall] = useState<string>("");
-  const [openSheet, setOpenSheet] = useState<boolean>(false);
   const { liked, addToLiked } = useLikedStore();
 
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -43,7 +44,7 @@ export default function Home(): JSX.Element {
           translateY: interpolate(
             scrollOffset.value,
             [-IMG_HEIGHT, 0, IMG_HEIGHT],
-            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+            [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.6]
           ),
         },
         {
@@ -57,10 +58,29 @@ export default function Home(): JSX.Element {
     };
   });
 
-  const handleWallPress = (wall: string) => {
-    setCurrentWall(wall);
-    setOpenSheet(true);
-  };
+  const [visible, setVisible] = useState<boolean>(false);
+  const YValue = useSharedValue(280);
+
+  const overlayAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: YValue.value }],
+    };
+  });
+
+  useEffect(() => {
+    if (visible) {
+      YValue.value = withTiming(0, {
+        duration: 500,
+        easing: Easing.out(Easing.linear),
+      });
+      setTimeout(() => {
+        YValue.value = withTiming(280, {
+          duration: 500,
+          easing: Easing.out(Easing.linear),
+        });
+      }, 2000);
+    }
+  }, [visible]);
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -78,32 +98,69 @@ export default function Home(): JSX.Element {
                   { backgroundColor: color.primaryBg },
                 ]}
               >
-                <Pressable onPress={() => handleWallPress(wall.url)}>
+                <Pressable onPress={() => setVisible(true)}>
                   <Image style={styles.wall} source={{ uri: wall.url }} />
                 </Pressable>
 
-                <View style={styles.wallOverlay}>
-                  <Text
-                    style={[styles.wallTitle, { color: color.secondaryText }]}
+                <AnimatedPressable
+                  style={[styles.wallOverlay, overlayAnimatedStyle]}
+                  onPress={() => setVisible(false)}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
                   >
-                    {wall.title}
-                  </Text>
-                  <AntDesign
-                    size={22}
-                    name={likedWall ? "heart" : "hearto"}
-                    color={color.secondaryText}
-                    onPress={() => addToLiked(wall)}
-                  />
-                </View>
+                    <Text
+                      style={[styles.wallTitle, { color: color.secondaryText }]}
+                    >
+                      {wall.title}
+                    </Text>
+                    <AntDesign
+                      size={22}
+                      name={likedWall ? "heart" : "hearto"}
+                      color={color.secondaryText}
+                      onPress={() => addToLiked(wall)}
+                    />
+                  </View>
+
+                  <View
+                    style={{ alignItems: "center", gap: 20, marginTop: "50%" }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "QuicksandMed",
+                        color: color.secondaryText,
+                        borderWidth: 1,
+                        borderColor: color.secondaryText,
+                        borderRadius: 30,
+                        paddingVertical: 8,
+                        paddingHorizontal: 20,
+                      }}
+                    >
+                      Download
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "QuicksandMed",
+                        color: color.secondaryText,
+                        borderWidth: 1,
+                        borderColor: color.secondaryText,
+                        borderRadius: 30,
+                        paddingVertical: 8,
+                        paddingHorizontal: 20,
+                      }}
+                    >
+                      Share
+                    </Text>
+                  </View>
+                </AnimatedPressable>
               </View>
             );
           })}
         </View>
       </Animated.ScrollView>
-
-      {openSheet && (
-        <Sheet currentWall={currentWall} onClose={() => setOpenSheet(false)} />
-      )}
     </GestureHandlerRootView>
   );
 }
@@ -131,13 +188,10 @@ const styles = StyleSheet.create({
   },
   wallOverlay: {
     width: "100%",
+    height: "100%",
     position: "absolute",
-    bottom: 0,
     paddingHorizontal: 10,
     paddingVertical: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
     backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   wallTitle: {
