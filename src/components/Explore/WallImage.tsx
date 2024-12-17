@@ -9,7 +9,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import Animated, { FadeOut, ZoomIn, ZoomOut } from "react-native-reanimated";
 
 import { IWall } from "@/src/types/types";
 import { useLikedStore } from "@/src/store/likedStore";
@@ -40,8 +40,8 @@ export default function WallImage({ wall }: { wall: IWall }): JSX.Element {
         <AnimatedPressable
           style={styles.overlay}
           onPress={() => setOpenOverlay(false)}
-          entering={FadeIn}
-          exiting={FadeOut}
+          entering={ZoomIn}
+          exiting={ZoomOut}
         >
           <TouchableOpacity
             activeOpacity={0.6}
@@ -74,10 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   removeButton: {
-    width: "80%",
     alignSelf: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     borderWidth: 1,
     borderRadius: 30,
   },
