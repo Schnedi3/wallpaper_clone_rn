@@ -14,7 +14,7 @@ interface ITabBarButtonProps {
   onPress: () => void;
   isFocused: boolean;
   label: string;
-  routeName: "index" | "explore";
+  routeName: "index" | "explore" | "profile";
   props: any;
 }
 
