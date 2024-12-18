@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 
 import { Colors } from "@/src/constants/Colors";
 import { Walls } from "@/assets/data/Walls";
@@ -30,24 +24,20 @@ export default function Suggested(): JSX.Element {
   }
 
   return (
-    <ScrollView>
-      <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-        {Suggested.map((wall) => (
-          <WallList key={wall.id} wall={wall} />
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList
+      style={[styles.container, { backgroundColor: color.secondaryBg }]}
+      contentContainerStyle={{ padding: 20, gap: 20 }}
+      columnWrapperStyle={{ justifyContent: "space-between" }}
+      data={Suggested}
+      numColumns={2}
+      renderItem={({ item: wall }) => <WallList wall={wall} />}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    gap: 20,
   },
   // empty
   emptyContainer: {

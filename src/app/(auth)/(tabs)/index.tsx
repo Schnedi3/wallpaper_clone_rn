@@ -1,4 +1,4 @@
-import { StyleSheet, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, useColorScheme, View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -51,14 +51,22 @@ export default function Home(): JSX.Element {
         </View>
       )}
 
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+      <Animated.ScrollView
+        ref={scrollRef}
+        scrollEventThrottle={16}
+        style={{ backgroundColor: color.secondaryBg }}
+      >
         <Carousel style={imageAnimatedStyle} />
 
-        <View style={[styles.walls, { backgroundColor: color.secondaryBg }]}>
-          {Walls.map((wall) => (
-            <WallList key={wall.id} wall={wall} />
-          ))}
-        </View>
+        <FlatList
+          style={{ backgroundColor: color.secondaryBg }}
+          contentContainerStyle={{ padding: 20, gap: 20 }}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          data={Walls}
+          numColumns={2}
+          renderItem={({ item: wall }) => <WallList wall={wall} />}
+          scrollEnabled={false}
+        />
       </Animated.ScrollView>
     </>
   );
@@ -67,13 +75,6 @@ export default function Home(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  walls: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    gap: 15,
-    padding: 20,
   },
   toastContainer: {
     position: "absolute",

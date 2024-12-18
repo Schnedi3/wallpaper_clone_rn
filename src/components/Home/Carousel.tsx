@@ -3,7 +3,6 @@ import {
   Image,
   StyleProp,
   StyleSheet,
-  useColorScheme,
   View,
   ViewStyle,
 } from "react-native";
@@ -26,8 +25,6 @@ export default function Carousel({
   style: StyleProp<ViewStyle>;
 }): JSX.Element {
   const scrollX = useSharedValue(0);
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
 
   return (
     <Animated.View style={style}>

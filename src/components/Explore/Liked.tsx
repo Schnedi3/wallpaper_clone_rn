@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 
 import { useLikedStore } from "@/src/store/likedStore";
 import LikedImage from "./LikedImage";
@@ -26,14 +20,14 @@ export default function Liked(): JSX.Element {
   }
 
   return (
-    <ScrollView
+    <FlatList
       style={{ backgroundColor: color.secondaryBg }}
-      contentContainerStyle={styles.WallsContainer}
-    >
-      {liked.map((wall) => (
-        <LikedImage wall={wall} key={wall.id} />
-      ))}
-    </ScrollView>
+      contentContainerStyle={{ padding: 20, gap: 20 }}
+      columnWrapperStyle={{ justifyContent: "space-between" }}
+      data={liked}
+      numColumns={2}
+      renderItem={({ item: wall }) => <LikedImage wall={wall} />}
+    />
   );
 }
 
