@@ -68,7 +68,7 @@ export default function WallList({
     }
   }, [openOverlay]);
 
-  const likedWall = liked.find((item) => item.id === wall.id);
+  const isLiked = liked.some((item) => item.id === wall.id);
 
   const handleDownloadImage = async () => {
     setIsDownloading(true);
@@ -130,12 +130,17 @@ export default function WallList({
           <Text style={[styles.wallTitle, { color: color.secondaryText }]}>
             {wall.title}
           </Text>
-          <AntDesign
-            size={22}
-            name={likedWall ? "heart" : "hearto"}
-            color={color.secondaryText}
+          <TouchableOpacity
+            activeOpacity={0.6}
             onPress={() => addToLiked(wall)}
-          />
+            disabled={isLiked}
+          >
+            <AntDesign
+              size={22}
+              name={isLiked ? "heart" : "hearto"}
+              color={color.secondaryText}
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.buttonsContainer}>
