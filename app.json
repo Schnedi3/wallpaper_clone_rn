@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "wallpaper-clone",
+    "owner": "schnedi",
     "slug": "wallpaper-clone",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -45,7 +46,8 @@
           "savePhotosPermission": "Allow Wallpaper Clone to save photos.",
           "isAccessMediaLocationEnabled": true
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
