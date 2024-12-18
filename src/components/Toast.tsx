@@ -13,7 +13,7 @@ import { Colors } from "../constants/Colors";
 interface IToastProps {
   type: "success" | "error";
   message: string;
-  visible: boolean;
+  toastVisible: boolean;
 }
 
 const toastColor = {
@@ -24,7 +24,7 @@ const toastColor = {
 export default function Toast({
   type,
   message,
-  visible,
+  toastVisible,
 }: IToastProps): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
@@ -37,19 +37,18 @@ export default function Toast({
   });
 
   useEffect(() => {
-    if (visible) {
-      YValue.value = withTiming(-80, {
-        duration: 500,
+    if (toastVisible) {
+      YValue.value = withTiming(-100, {
+        duration: 300,
         easing: Easing.out(Easing.linear),
       });
-      setTimeout(() => {
-        YValue.value = withTiming(0, {
-          duration: 500,
-          easing: Easing.out(Easing.linear),
-        });
-      }, 2500);
+    } else {
+      YValue.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.out(Easing.linear),
+      });
     }
-  }, [visible]);
+  }, [toastVisible]);
 
   return (
     <Animated.View
