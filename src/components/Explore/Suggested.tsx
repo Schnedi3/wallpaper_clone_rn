@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 
 import { Colors } from "@/src/constants/Colors";
 import { Walls } from "@/assets/data/Walls";
-import WallList from "@/src/components/Home/WallList";
+import WallList from "@/src/components/WallList";
 
 export default function Suggested(): JSX.Element {
   const colorTheme = useColorScheme();
