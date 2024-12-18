@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { StyleSheet, useColorScheme, View } from "react-native";
 import Animated, {
   interpolate,
@@ -12,13 +11,12 @@ import Carousel from "@/src/components/Home/Carousel";
 import { Colors } from "@/src/constants/Colors";
 import WallList from "@/src/components/Home/WallList";
 import Toast from "@/src/components/Toast";
+import { useWallStore } from "@/src/store/wallStore";
 
 const IMG_HEIGHT = 300;
 
 export default function Home(): JSX.Element {
-  const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
-  const [toastVisible, setToastVisible] = useState<boolean>(false);
-
+  const { isDownloaded } = useWallStore();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const colorTheme = useColorScheme();
@@ -49,11 +47,7 @@ export default function Home(): JSX.Element {
     <>
       {isDownloaded && (
         <View style={styles.toastContainer}>
-          <Toast
-            type="success"
-            message="Image downloaded successfully!"
-            toastVisible={toastVisible}
-          />
+          <Toast type="success" message="Image downloaded successfully!" />
         </View>
       )}
 
@@ -62,12 +56,7 @@ export default function Home(): JSX.Element {
 
         <View style={[styles.walls, { backgroundColor: color.secondaryBg }]}>
           {Walls.map((wall) => (
-            <WallList
-              key={wall.id}
-              wall={wall}
-              setIsDownloaded={setIsDownloaded}
-              setToastVisible={setToastVisible}
-            />
+            <WallList key={wall.id} wall={wall} />
           ))}
         </View>
       </Animated.ScrollView>

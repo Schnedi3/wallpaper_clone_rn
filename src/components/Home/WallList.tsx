@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  Alert,
   Dimensions,
   Image,
   Pressable,
-  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,35 +15,22 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import * as MediaLibrary from "expo-media-library";
-import * as FileSystem from "expo-file-system";
+import { AntDesign } from "@expo/vector-icons";
 
 import { useLikedStore } from "@/src/store/likedStore";
 import { Colors } from "@/src/constants/Colors";
 import { IWall } from "@/src/types/types";
+import DownloadShare from "@/src/components/DownloadShare";
 
 const { width } = Dimensions.get("window");
-const IMG_HEIGHT = 300;
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export default function WallList({
-  wall,
-  setIsDownloaded,
-  setToastVisible,
-}: {
-  wall: IWall;
-  setIsDownloaded: (value: boolean) => void;
-  setToastVisible: (value: boolean) => void;
-}) {
+export default function WallList({ wall }: { wall: IWall }) {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
-  const [isDownloading, setIsDownloading] = useState<boolean>(false);
-  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-
   const { liked, addToLiked } = useLikedStore();
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
-  const YValue = useSharedValue(280);
+  const YValue = useSharedValue(0);
 
   const overlayAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -56,12 +40,12 @@ export default function WallList({
 
   useEffect(() => {
     if (openOverlay) {
-      YValue.value = withTiming(0, {
+      YValue.value = withTiming(-280, {
         duration: 500,
         easing: Easing.out(Easing.linear),
       });
     } else {
-      YValue.value = withTiming(280, {
+      YValue.value = withTiming(0, {
         duration: 500,
         easing: Easing.out(Easing.linear),
       });
@@ -69,47 +53,6 @@ export default function WallList({
   }, [openOverlay]);
 
   const isLiked = liked.some((item) => item.id === wall.id);
-
-  const handleDownloadImage = async () => {
-    setIsDownloading(true);
-    const filename = wall.url.split("/").pop();
-
-    if (permissionResponse?.status !== "granted") {
-      await requestPermission();
-    }
-
-    const fileUri = FileSystem.documentDirectory + `${filename}`;
-    const { uri } = await FileSystem.downloadAsync(wall.url, fileUri);
-
-    const asset = await MediaLibrary.createAssetAsync(uri);
-    if (asset) {
-      setIsDownloaded(true);
-      handleToast();
-      setOpenOverlay(false);
-    } else {
-      setIsDownloaded(false);
-      Alert.alert("Error", "Failed to download Image");
-    }
-
-    setIsDownloading(false);
-  };
-
-  const handleShare = async () => {
-    try {
-      await Share.share({ message: "Check out this wall!" });
-    } catch (error) {
-      Alert.alert("Error", "Failed to share Image");
-    }
-
-    setOpenOverlay(false);
-  };
-
-  const handleToast = () => {
-    setToastVisible(true);
-    setTimeout(() => {
-      setToastVisible(false);
-    }, 2000);
-  };
 
   return (
     <View
@@ -142,31 +85,7 @@ export default function WallList({
           </TouchableOpacity>
         </View>
 
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={styles.button}
-            onPress={handleDownloadImage}
-          >
-            {isDownloading ? (
-              <ActivityIndicator size="small" color={Colors.LightText} />
-            ) : (
-              <AntDesign name="download" style={styles.icon} />
-            )}
-            <Text style={styles.buttonText}>
-              {isDownloading ? "Saving..." : "Save"}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={styles.button}
-            onPress={handleShare}
-          >
-            <Ionicons name="share-social-outline" style={styles.icon} />
-            <Text style={styles.buttonText}>Share</Text>
-          </TouchableOpacity>
-        </View>
+        <DownloadShare wall={wall} setOpenOverlay={setOpenOverlay} />
       </AnimatedPressable>
     </View>
   );
@@ -175,7 +94,7 @@ export default function WallList({
 const styles = StyleSheet.create({
   wallContainer: {
     width: width / 2 - 30,
-    height: IMG_HEIGHT * 1.1,
+    height: width * 0.7,
     borderRadius: 20,
     overflow: "hidden",
   },
@@ -187,8 +106,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "absolute",
+    top: 280,
     paddingHorizontal: 10,
     paddingVertical: 15,
+    gap: 100,
     backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   wallTitle: {
@@ -198,27 +119,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 22,
-    color: Colors.LightText,
-  },
-  buttonsContainer: {
-    alignItems: "center",
-    gap: 20,
-    marginTop: "50%",
-  },
-  button: {
-    width: "80%",
-    paddingVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
-    color: Colors.LightText,
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: Colors.LightText,
-  },
-  buttonText: {
-    fontFamily: "QuicksandMed",
     color: Colors.LightText,
   },
 });

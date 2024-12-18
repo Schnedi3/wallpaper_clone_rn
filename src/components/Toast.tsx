@@ -8,12 +8,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 
-import { Colors } from "../constants/Colors";
+import { Colors } from "@/src/constants/Colors";
+import { useWallStore } from "@/src/store/wallStore";
 
 interface IToastProps {
   type: "success" | "error";
   message: string;
-  toastVisible: boolean;
 }
 
 const toastColor = {
@@ -21,11 +21,8 @@ const toastColor = {
   error: "#cf6b6b",
 };
 
-export default function Toast({
-  type,
-  message,
-  toastVisible,
-}: IToastProps): JSX.Element {
+export default function Toast({ type, message }: IToastProps): JSX.Element {
+  const { toastVisible } = useWallStore();
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
   const YValue = useSharedValue(0);

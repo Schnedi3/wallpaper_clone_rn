@@ -6,24 +6,21 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from "react-native";
-import Animated, { FadeOut, ZoomIn, ZoomOut } from "react-native-reanimated";
+import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 
 import { IWall } from "@/src/types/types";
 import { useLikedStore } from "@/src/store/likedStore";
 import { Colors } from "@/src/constants/Colors";
+import DownloadShare from "@/src/components/DownloadShare";
 
 const { width } = Dimensions.get("window");
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
-
   const { removeFromLiked } = useLikedStore();
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
 
   const handleRemoveFromLiked = () => {
     removeFromLiked(wall);
@@ -32,8 +29,8 @@ export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
 
   return (
     <View>
-      <AnimatedPressable onPress={() => setOpenOverlay(true)} exiting={FadeOut}>
-        <Image style={styles.image} source={{ uri: wall.url }} key={wall.id} />
+      <AnimatedPressable onPress={() => setOpenOverlay(true)} exiting={ZoomOut}>
+        <Image style={styles.wall} source={{ uri: wall.url }} />
       </AnimatedPressable>
 
       {openOverlay && (
@@ -50,6 +47,8 @@ export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
           >
             <Text style={styles.removeText}>Remove from liked</Text>
           </TouchableOpacity>
+
+          <DownloadShare wall={wall} setOpenOverlay={setOpenOverlay} />
         </AnimatedPressable>
       )}
     </View>
@@ -57,10 +56,10 @@ export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  image: {
+  wall: {
     width: width / 2 - 30,
     height: width * 0.7,
-    borderRadius: 16,
+    borderRadius: 20,
   },
   overlay: {
     width: width / 2 - 30,
@@ -68,7 +67,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     inset: 0,
     justifyContent: "center",
-    borderRadius: 16,
+    gap: 20,
+    borderRadius: 20,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   removeButton: {

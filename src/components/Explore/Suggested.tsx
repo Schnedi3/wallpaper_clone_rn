@@ -8,7 +8,7 @@ import {
 
 import { Colors } from "@/src/constants/Colors";
 import { Walls } from "@/assets/data/Walls";
-import SuggestedImage from "./SuggestedImage";
+import WallList from "@/src/components/Home/WallList";
 
 export default function Suggested(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -33,7 +33,7 @@ export default function Suggested(): JSX.Element {
     <ScrollView>
       <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
         {Suggested.map((wall) => (
-          <SuggestedImage key={wall.id} wall={wall} />
+          <WallList key={wall.id} wall={wall} />
         ))}
       </View>
     </ScrollView>
