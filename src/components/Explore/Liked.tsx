@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useLikedStore } from "@/src/store/likedStore";
-import WallImage from "./WallImage";
+import LikedImage from "./LikedImage";
 import { Colors } from "@/src/constants/Colors";
 
 export default function Liked(): JSX.Element {
@@ -31,7 +31,7 @@ export default function Liked(): JSX.Element {
       contentContainerStyle={styles.WallsContainer}
     >
       {liked.map((wall) => (
-        <WallImage wall={wall} key={wall.id} />
+        <LikedImage wall={wall} key={wall.id} />
       ))}
     </ScrollView>
   );
@@ -39,11 +39,10 @@ export default function Liked(): JSX.Element {
 
 const styles = StyleSheet.create({
   WallsContainer: {
-    minHeight: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    rowGap: 20,
+    gap: 20,
     padding: 20,
   },
   emptyContainer: {
