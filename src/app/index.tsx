@@ -55,11 +55,8 @@ export default function LoginScreen(): JSX.Element {
 
   return (
     <View style={styles.container}>
-
       <View style={styles.login}>
-        <Text style={[styles.title, { color: color.primaryText }]}>
-          Welcome
-        </Text>
+        <Text style={styles.title}>Welcome</Text>
 
         <LoginButton
           onPress={() => handleLogin(Strategy.Google)}
@@ -114,17 +111,12 @@ const LoginButton = ({
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={[styles.LoginButton, { backgroundColor: color.invertedBg }]}
+      style={styles.LoginButton}
       onPress={onPress}
     >
       <View style={styles.continue}>
-        <Ionicons
-          name={iconName}
-          style={{ fontSize: 24, color: color.invertedText }}
-        />
-        <Text style={[styles.LoginButtonText, { color: color.secondaryText }]}>
-          {buttonText}
-        </Text>
+        <Ionicons name={iconName} style={styles.logoIcon} />
+        <Text style={styles.LoginButtonText}>{buttonText}</Text>
         <FontAwesome6
           name="arrow-right-long"
           style={{ fontSize: 20, color: color.accent }}
@@ -142,6 +134,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "QuicksandBold",
     fontSize: 55,
+    color: Colors.darkText,
   },
   gradient: {
     width: "100%",
@@ -174,6 +167,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     alignItems: "center",
     borderRadius: 10,
+    backgroundColor: Colors.darkBg,
   },
   continue: {
     width: "100%",
@@ -181,8 +175,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  logoIcon: {
+    fontSize: 24,
+    color: Colors.LightText,
+  },
   LoginButtonText: {
     fontFamily: "QuicksandSemi",
     fontSize: 17,
+    color: Colors.LightText,
   },
 });

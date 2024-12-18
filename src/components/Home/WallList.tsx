@@ -129,18 +129,15 @@ export default function WallList({
             justifyContent: "space-around",
           }}
         >
-          <Text style={[styles.wallTitle, { color: color.invertedText }]}>
-            {wall.title}
-          </Text>
+          <Text style={styles.wallTitle}>{wall.title}</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => addToLiked(wall)}
             disabled={isLiked}
           >
             <AntDesign
-              size={22}
               name={isLiked ? "heart" : "hearto"}
-              color={color.invertedText}
+              style={styles.icon}
             />
           </TouchableOpacity>
         </View>
@@ -148,32 +145,26 @@ export default function WallList({
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.button, { borderColor: color.invertedText }]}
+            style={styles.button}
             onPress={handleDownloadImage}
           >
             {isDownloading ? (
-              <ActivityIndicator size="small" color={color.invertedText} />
+              <ActivityIndicator size="small" color={Colors.LightText} />
             ) : (
-              <AntDesign name="download" size={22} color={color.invertedText} />
+              <AntDesign name="download" style={styles.icon} />
             )}
-            <Text style={[styles.buttonText, { color: color.invertedText }]}>
+            <Text style={styles.buttonText}>
               {isDownloading ? "Saving..." : "Save"}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.button, { borderColor: color.invertedText }]}
+            style={styles.button}
             onPress={handleShare}
           >
-            <Ionicons
-              name="share-social-outline"
-              size={22}
-              color={color.invertedText}
-            />
-            <Text style={[styles.buttonText, { color: color.invertedText }]}>
-              Share
-            </Text>
+            <Ionicons name="share-social-outline" style={styles.icon} />
+            <Text style={styles.buttonText}>Share</Text>
           </TouchableOpacity>
         </View>
       </AnimatedPressable>
@@ -203,6 +194,11 @@ const styles = StyleSheet.create({
   wallTitle: {
     fontFamily: "QuicksandMed",
     textAlign: "center",
+    color: Colors.LightText,
+  },
+  icon: {
+    fontSize: 22,
+    color: Colors.LightText,
   },
   buttonsContainer: {
     alignItems: "center",
@@ -216,10 +212,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
+    color: Colors.LightText,
     borderWidth: 1,
     borderRadius: 30,
+    borderColor: Colors.LightText,
   },
   buttonText: {
     fontFamily: "QuicksandMed",
+    color: Colors.LightText,
   },
 });

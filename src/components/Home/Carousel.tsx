@@ -81,14 +81,7 @@ export default function Carousel({
           });
 
           return (
-            <Animated.View
-              key={index}
-              style={[
-                styles.dot,
-                animatedDotStyle,
-                { backgroundColor: color.invertedText },
-              ]}
-            />
+            <Animated.View key={index} style={[styles.dot, animatedDotStyle]} />
           );
         })}
       </View>
@@ -118,5 +111,6 @@ const styles = StyleSheet.create({
     width: 7,
     height: 7,
     borderRadius: 20,
+    backgroundColor: Colors.LightText,
   },
 });

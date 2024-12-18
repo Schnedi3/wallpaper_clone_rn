@@ -45,12 +45,10 @@ export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
         >
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.removeButton, { borderColor: color.invertedText }]}
+            style={styles.removeButton}
             onPress={handleRemoveFromLiked}
           >
-            <Text style={[styles.removeText, { color: color.invertedText }]}>
-              Remove from liked
-            </Text>
+            <Text style={styles.removeText}>Remove from liked</Text>
           </TouchableOpacity>
         </AnimatedPressable>
       )}
@@ -79,9 +77,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderWidth: 1,
     borderRadius: 30,
+    borderColor: Colors.LightText,
   },
   removeText: {
     fontFamily: "QuicksandMed",
     textAlign: "center",
+    color: Colors.LightText,
   },
 });
