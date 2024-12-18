@@ -86,7 +86,7 @@ export default function Carousel({
               style={[
                 styles.dot,
                 animatedDotStyle,
-                { backgroundColor: color.secondaryText },
+                { backgroundColor: color.invertedText },
               ]}
             />
           );

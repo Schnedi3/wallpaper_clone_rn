@@ -15,7 +15,7 @@ export default function Explore(): JSX.Element {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: color.secondaryBg,
+          backgroundColor: color.primaryBg,
         },
         tabBarActiveTintColor: color.accent,
         tabBarInactiveTintColor: color.disabled,

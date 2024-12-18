@@ -18,7 +18,7 @@ export default function Liked(): JSX.Element {
   if (liked.length === 0) {
     return (
       <View
-        style={[styles.emptyContainer, { backgroundColor: color.primaryBg }]}
+        style={[styles.emptyContainer, { backgroundColor: color.secondaryBg }]}
       >
         <Text style={[styles.empty, { color: color.primaryText }]}>Liked</Text>
       </View>
@@ -27,7 +27,7 @@ export default function Liked(): JSX.Element {
 
   return (
     <ScrollView
-      style={{ backgroundColor: color.primaryBg }}
+      style={{ backgroundColor: color.secondaryBg }}
       contentContainerStyle={styles.WallsContainer}
     >
       {liked.map((wall) => (

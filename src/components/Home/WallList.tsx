@@ -112,7 +112,9 @@ export default function WallList({
   };
 
   return (
-    <View style={[styles.wallContainer, { backgroundColor: color.primaryBg }]}>
+    <View
+      style={[styles.wallContainer, { backgroundColor: color.secondaryBg }]}
+    >
       <Pressable onPress={() => setOpenOverlay(true)}>
         <Image style={styles.wall} source={{ uri: wall.url }} />
       </Pressable>
@@ -127,7 +129,7 @@ export default function WallList({
             justifyContent: "space-around",
           }}
         >
-          <Text style={[styles.wallTitle, { color: color.secondaryText }]}>
+          <Text style={[styles.wallTitle, { color: color.invertedText }]}>
             {wall.title}
           </Text>
           <TouchableOpacity
@@ -138,7 +140,7 @@ export default function WallList({
             <AntDesign
               size={22}
               name={isLiked ? "heart" : "hearto"}
-              color={color.secondaryText}
+              color={color.invertedText}
             />
           </TouchableOpacity>
         </View>
@@ -146,34 +148,30 @@ export default function WallList({
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.button, { borderColor: color.secondaryText }]}
+            style={[styles.button, { borderColor: color.invertedText }]}
             onPress={handleDownloadImage}
           >
             {isDownloading ? (
-              <ActivityIndicator size="small" color={color.primaryText} />
+              <ActivityIndicator size="small" color={color.invertedText} />
             ) : (
-              <AntDesign
-                name="download"
-                size={22}
-                color={color.secondaryText}
-              />
+              <AntDesign name="download" size={22} color={color.invertedText} />
             )}
-            <Text style={[styles.buttonText, { color: color.secondaryText }]}>
+            <Text style={[styles.buttonText, { color: color.invertedText }]}>
               {isDownloading ? "Saving..." : "Save"}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.button, { borderColor: color.secondaryText }]}
+            style={[styles.button, { borderColor: color.invertedText }]}
             onPress={handleShare}
           >
             <Ionicons
               name="share-social-outline"
               size={22}
-              color={color.secondaryText}
+              color={color.invertedText}
             />
-            <Text style={[styles.buttonText, { color: color.secondaryText }]}>
+            <Text style={[styles.buttonText, { color: color.invertedText }]}>
               Share
             </Text>
           </TouchableOpacity>

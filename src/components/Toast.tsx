@@ -56,7 +56,7 @@ export default function Toast({
         styles.toastContainer,
         animatedStyle,
         {
-          backgroundColor: color.secondaryBg,
+          backgroundColor: color.primaryBg,
           borderColor:
             type === "success" ? toastColor.success : toastColor.error,
         },

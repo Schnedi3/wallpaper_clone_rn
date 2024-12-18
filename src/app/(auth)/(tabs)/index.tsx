@@ -60,7 +60,7 @@ export default function Home(): JSX.Element {
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         <Carousel style={imageAnimatedStyle} />
 
-        <View style={[styles.walls, { backgroundColor: color.primaryBg }]}>
+        <View style={[styles.walls, { backgroundColor: color.secondaryBg }]}>
           {Walls.map((wall) => (
             <WallList
               key={wall.id}

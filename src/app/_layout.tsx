@@ -54,7 +54,7 @@ function RootLayout(): JSX.Element {
           <Stack.Screen name="(auth)" />
         </Stack>
         <StatusBar
-          backgroundColor={color.secondaryBg}
+          backgroundColor={color.primaryBg}
           barStyle={colorTheme === "dark" ? "light-content" : "dark-content"}
         />
       </View>

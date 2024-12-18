@@ -7,7 +7,7 @@ export default function Suggested(): JSX.Element {
   const color = Colors[colorTheme ?? "light"];
 
   return (
-    <View style={[styles.container, { backgroundColor: color.primaryBg }]}>
+    <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
       <Text style={[styles.title, { color: color.primaryText }]}>
         Suggested
       </Text>

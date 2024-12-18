@@ -45,10 +45,10 @@ export default function WallImage({ wall }: { wall: IWall }): JSX.Element {
         >
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.removeButton, { borderColor: color.primaryText }]}
+            style={[styles.removeButton, { borderColor: color.invertedText }]}
             onPress={handleRemoveFromLiked}
           >
-            <Text style={[styles.removeText, { color: color.primaryText }]}>
+            <Text style={[styles.removeText, { color: color.invertedText }]}>
               Remove from liked
             </Text>
           </TouchableOpacity>
