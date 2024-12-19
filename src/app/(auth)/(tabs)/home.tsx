@@ -5,6 +5,9 @@ import WallList from "@/src/components/WallList";
 import Toast from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
+import { Stack } from "expo-router";
+
+import Header from "@/src/components/Home/Header";
 
 export default function Home(): JSX.Element {
   const { isDownloaded } = useWallStore();
@@ -17,6 +20,8 @@ export default function Home(): JSX.Element {
           <Toast type="success" message="Image downloaded successfully!" />
         </View>
       )}
+
+      <Stack.Screen options={{ header: () => <Header /> }} />
 
       <FlatList
         style={{ backgroundColor: color.secondaryBg }}

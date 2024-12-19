@@ -12,7 +12,12 @@ export default function TabBar({
   const { color } = useThemeColor();
 
   return (
-    <View style={[styles.tabBar, { backgroundColor: color.primaryBg }]}>
+    <View
+      style={[
+        styles.tabBar,
+        { backgroundColor: color.primaryBg, borderTopColor: color.border },
+      ]}
+    >
       {state.routes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
         const label =
@@ -55,7 +60,6 @@ const styles = StyleSheet.create({
   tabBar: {
     paddingVertical: 14,
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderTopWidth: 1,
   },
 });

@@ -2,6 +2,7 @@ export interface IWall {
   id: number;
   title: string;
   url: string;
+  category: string;
 }
 
 export interface ILikedStore {

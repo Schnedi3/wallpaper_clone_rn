@@ -15,12 +15,16 @@ export default function Explore(): JSX.Element {
       screenOptions={{
         tabBarStyle: {
           backgroundColor: color.primaryBg,
+          boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.1)",
+          borderBottomWidth: 1,
+          borderBottomColor: color.border,
         },
         tabBarActiveTintColor: color.accent,
         tabBarInactiveTintColor: color.disabled,
         tabBarIndicatorStyle: {
           backgroundColor: color.accent,
         },
+        tabBarPressColor: "transparent",
       }}
     >
       <Tab.Screen
