@@ -1,11 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useOAuth } from "@clerk/clerk-expo";
@@ -14,6 +7,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { Colors } from "@/src/constants/Colors";
 import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
+import { useThemeColor } from "../hooks/useThemeColor";
 
 enum Strategy {
   Google = "oauth_google",
@@ -25,8 +19,7 @@ const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
 
 export default function LoginScreen(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   useWarmUpBrowser();
   const { startOAuthFlow: googleAuth } = useOAuth({
@@ -114,8 +107,7 @@ const LoginButton = ({
   iconName: keyof typeof Ionicons.glyphMap;
   buttonText: string;
 }) => {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   return (
     <AnimatedTouchableOpacity

@@ -1,15 +1,14 @@
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import Liked from "@/src/components/Explore/Liked";
 import Suggested from "@/src/components/Explore/Suggested";
-import { Colors } from "@/src/constants/Colors";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function Explore(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   return (
     <Tab.Navigator

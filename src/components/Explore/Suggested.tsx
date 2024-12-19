@@ -1,12 +1,11 @@
-import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
-import { Colors } from "@/src/constants/Colors";
 import { Walls } from "@/assets/data/Walls";
 import WallList from "@/src/components/WallList";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Suggested(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const shuffledWalls = [...Walls].sort(() => 0.5 - Math.random());
   const Suggested = shuffledWalls.slice(0, 6);

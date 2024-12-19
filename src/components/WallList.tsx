@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from "react-native";
 import Animated, {
@@ -21,6 +20,7 @@ import { useLikedStore } from "@/src/store/likedStore";
 import { Colors } from "@/src/constants/Colors";
 import { IWall } from "@/src/types/types";
 import DownloadShare from "@/src/components/DownloadShare";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const { width } = Dimensions.get("window");
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -28,8 +28,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export default function WallList({ wall }: { wall: IWall }) {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
   const { liked, addToLiked } = useLikedStore();
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
   const YValue = useSharedValue(0);
 
   const overlayAnimatedStyle = useAnimatedStyle(() => {

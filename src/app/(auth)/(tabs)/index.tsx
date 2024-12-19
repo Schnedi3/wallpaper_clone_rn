@@ -1,17 +1,16 @@
-import { FlatList, StyleSheet, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import { Walls } from "@/assets/data/Walls";
-import { Colors } from "@/src/constants/Colors";
 import WallList from "@/src/components/WallList";
 import Toast from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const IMG_HEIGHT = 300;
 
 export default function Home(): JSX.Element {
   const { isDownloaded } = useWallStore();
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   return (
     <>

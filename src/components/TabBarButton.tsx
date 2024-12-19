@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Pressable, StyleSheet, useColorScheme } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -8,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { tabBarIcons } from "@/src/constants/tabBarIcons";
-import { Colors } from "@/src/constants/Colors";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 interface ITabBarButtonProps {
   onPress: () => void;
@@ -25,8 +25,7 @@ export default function TabBarButton({
   ...props
 }: ITabBarButtonProps): JSX.Element {
   const scale = useSharedValue(0);
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   useEffect(() => {
     scale.value = withSpring(

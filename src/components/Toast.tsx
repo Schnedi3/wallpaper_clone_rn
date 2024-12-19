@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -8,8 +8,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 
-import { Colors } from "@/src/constants/Colors";
 import { useWallStore } from "@/src/store/wallStore";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 interface IToastProps {
   type: "success" | "error";
@@ -23,8 +23,7 @@ const toastColor = {
 
 export default function Toast({ type, message }: IToastProps): JSX.Element {
   const { toastVisible } = useWallStore();
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
   const YValue = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {

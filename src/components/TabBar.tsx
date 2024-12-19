@@ -1,16 +1,15 @@
-import { StyleSheet, useColorScheme, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 import TabBarButton from "./TabBarButton";
-import { Colors } from "@/src/constants/Colors";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function TabBar({
   state,
   descriptors,
   navigation,
 }: BottomTabBarProps): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   return (
     <View style={[styles.tabBar, { backgroundColor: color.primaryBg }]}>

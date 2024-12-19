@@ -1,13 +1,12 @@
-import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { useLikedStore } from "@/src/store/likedStore";
 import LikedImage from "./LikedImage";
-import { Colors } from "@/src/constants/Colors";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Liked(): JSX.Element {
   const { liked } = useLikedStore();
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   if (liked.length === 0) {
     return (
