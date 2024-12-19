@@ -6,8 +6,6 @@ import Toast from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-const IMG_HEIGHT = 300;
-
 export default function Home(): JSX.Element {
   const { isDownloaded } = useWallStore();
   const { color } = useThemeColor();

@@ -19,8 +19,6 @@ const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
 
 export default function LoginScreen(): JSX.Element {
-  const { color } = useThemeColor();
-
   useWarmUpBrowser();
   const { startOAuthFlow: googleAuth } = useOAuth({
     strategy: Strategy.Google,

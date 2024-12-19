@@ -1,5 +1,5 @@
 import { StatusBar, View } from "react-native";
-import { router, Stack, useSegments } from "expo-router";
+import { router, Stack, usePathname, useSegments } from "expo-router";
 import { useFonts } from "expo-font";
 import { ClerkProvider, ClerkLoaded, useAuth } from "@clerk/clerk-expo";
 import {
@@ -43,8 +43,9 @@ const MyLightTheme = {
 function RootLayout(): JSX.Element {
   const { color, colorScheme } = useThemeColor();
 
-  const { isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
   const segments = useSegments();
+  const pathname = usePathname();
 
   useFonts({
     QuicksandBold: require("@/assets/fonts/Quicksand-Bold.ttf"),
@@ -53,19 +54,21 @@ function RootLayout(): JSX.Element {
   });
 
   useEffect(() => {
+    if (!isLoaded) return;
     const inAuthGroup = segments[0] === "(auth)";
 
     if (isSignedIn && !inAuthGroup) {
-      router.replace("/(auth)/(tabs)");
-    } else if (!isSignedIn && inAuthGroup) {
+      router.replace("/(auth)/(tabs)/home");
+    } else if (!isSignedIn && pathname !== "/") {
       router.replace("/");
     }
-  }, []);
+  }, [isLoaded, isSignedIn]);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? MyDarkTheme : MyLightTheme}>
-      <View style={{ flex: 1, backgroundColor: color.primaryBg }}>
+      <View style={{ flex: 1 }}>
         <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
           <Stack.Screen name="(auth)" />
         </Stack>
         <StatusBar
