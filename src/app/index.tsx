@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useOAuth } from "@clerk/clerk-expo";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { Colors } from "@/src/constants/Colors";
 import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
@@ -19,6 +20,9 @@ enum Strategy {
   Apple = "oauth_apple",
   Facebook = "oauth_facebook",
 }
+
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 export default function LoginScreen(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -56,7 +60,12 @@ export default function LoginScreen(): JSX.Element {
   return (
     <View style={styles.container}>
       <View style={styles.login}>
-        <Text style={styles.title}>Welcome</Text>
+        <Animated.Text
+          style={styles.title}
+          entering={FadeInDown.springify().delay(300)}
+        >
+          Welcome
+        </Animated.Text>
 
         <LoginButton
           onPress={() => handleLogin(Strategy.Google)}
@@ -109,10 +118,11 @@ const LoginButton = ({
   const color = Colors[colorTheme ?? "light"];
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.5}
+    <AnimatedTouchableOpacity
+      activeOpacity={0.85}
       style={styles.LoginButton}
       onPress={onPress}
+      entering={FadeInDown.springify().delay(400)}
     >
       <View style={styles.continue}>
         <Ionicons name={iconName} style={styles.logoIcon} />
@@ -122,7 +132,7 @@ const LoginButton = ({
           style={{ fontSize: 20, color: color.accent }}
         />
       </View>
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   );
 };
 
