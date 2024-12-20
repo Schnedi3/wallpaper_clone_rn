@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList } from "react-native";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -37,11 +37,7 @@ export default function Home(): JSX.Element {
 
   return (
     <GestureHandlerRootView>
-      {isDownloaded && (
-        <View style={styles.toastContainer}>
-          <Toast type="success" message="Image downloaded successfully!" />
-        </View>
-      )}
+      {isDownloaded && <Toast />}
 
       <Stack.Screen
         options={{
@@ -77,15 +73,3 @@ export default function Home(): JSX.Element {
     </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  toastContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: -60,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 100,
-  },
-});

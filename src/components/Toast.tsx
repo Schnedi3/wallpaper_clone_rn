@@ -11,17 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-interface IToastProps {
-  type: "success" | "error";
-  message: string;
-}
-
-const toastColor = {
-  success: "#6bcf6d",
-  error: "#cf6b6b",
-};
-
-export default function Toast({ type, message }: IToastProps): JSX.Element {
+export default function Toast(): JSX.Element {
   const { toastVisible } = useWallStore();
   const { color } = useThemeColor();
   const YValue = useSharedValue(0);
@@ -53,19 +43,14 @@ export default function Toast({ type, message }: IToastProps): JSX.Element {
         animatedStyle,
         {
           backgroundColor: color.primaryBg,
-          borderColor:
-            type === "success" ? toastColor.success : toastColor.error,
+          borderColor: color.border,
         },
       ]}
     >
       <View style={styles.toastInfo}>
-        <AntDesign
-          name={type === "success" ? "checkcircleo" : "closecircleo"}
-          size={24}
-          color={type === "success" ? toastColor.success : toastColor.error}
-        />
+        <AntDesign name="checkcircleo" size={24} color="#6bcf6d" />
         <Text style={[styles.toastMessage, { color: color.primaryText }]}>
-          {message}
+          Image downloaded successfully!
         </Text>
       </View>
     </Animated.View>
@@ -74,6 +59,11 @@ export default function Toast({ type, message }: IToastProps): JSX.Element {
 
 const styles = StyleSheet.create({
   toastContainer: {
+    position: "absolute",
+    bottom: -60,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 30,
     paddingVertical: 16,
     borderWidth: 1,
