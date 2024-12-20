@@ -12,9 +12,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { Walls } from "@/assets/data/Walls";
 
-export default function Header() {
+export default function Header({
+  selectedCategory,
+  setSelectedCategory,
+}: {
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+}) {
   const [search, setSearch] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { color } = useThemeColor();
 
   const categories = Walls.map((wall) => wall.category);

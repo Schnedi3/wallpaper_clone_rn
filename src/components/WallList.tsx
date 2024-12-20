@@ -13,6 +13,8 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
+  ZoomIn,
+  ZoomOut,
 } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -54,8 +56,10 @@ export default function WallList({ wall }: { wall: IWall }) {
   const isLiked = liked.some((item) => item.id === wall.id);
 
   return (
-    <View
+    <Animated.View
       style={[styles.wallContainer, { backgroundColor: color.secondaryBg }]}
+      entering={ZoomIn.duration(300)}
+      exiting={ZoomOut.duration(300)}
     >
       <Pressable onPress={() => setOpenOverlay(true)}>
         <Image style={styles.wall} source={{ uri: wall.url }} />
@@ -86,7 +90,7 @@ export default function WallList({ wall }: { wall: IWall }) {
 
         <DownloadShare wall={wall} setOpenOverlay={setOpenOverlay} />
       </AnimatedPressable>
-    </View>
+    </Animated.View>
   );
 }
 
