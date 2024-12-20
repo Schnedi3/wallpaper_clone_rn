@@ -41,7 +41,7 @@ export default function Profile() {
           activeOpacity={0.5}
           style={[
             styles.button,
-            { width: width / 3 - 30, borderColor: color.secondaryText },
+            { width: width / 3 - 30, borderColor: color.disabled },
           ]}
           onPress={() => signOut()}
         >
@@ -98,7 +98,7 @@ export const ThemeButton = ({
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={[styles.button, { flex: 1, borderColor: color.secondaryText }]}
+      style={[styles.button, { flex: 1, borderColor: color.disabled }]}
       onPress={() => Appearance.setColorScheme(colorScheme)}
     >
       <Ionicons

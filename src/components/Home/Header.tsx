@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -17,12 +16,16 @@ export default function Header({
   setSearch,
   selectedCategory,
   setSelectedCategory,
+  openBottomsheet,
+  setOpenBottomsheet,
 }: {
   search: string;
   setSearch: (value: string) => void;
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
-}) {
+  openBottomsheet: boolean;
+  setOpenBottomsheet: (value: boolean) => void;
+}): JSX.Element {
   const { color } = useThemeColor();
 
   const categories = Walls.map((wall) => wall.category);
@@ -74,6 +77,8 @@ export default function Header({
           <TouchableOpacity
             activeOpacity={0.5}
             style={[styles.filterBtn, { borderColor: color.disabled }]}
+            onPress={() => setOpenBottomsheet(true)}
+            disabled={openBottomsheet}
           >
             <Ionicons
               name="filter-outline"

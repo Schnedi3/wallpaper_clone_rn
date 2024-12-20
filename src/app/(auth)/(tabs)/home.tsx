@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { Walls } from "@/assets/data/Walls";
 import WallList from "@/src/components/WallList";
@@ -8,10 +9,13 @@ import Toast from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import Header from "@/src/components/Home/Header";
+import FilterSheet from "@/src/components/Home/FilterSheet";
 
 export default function Home(): JSX.Element {
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [openBottomsheet, setOpenBottomsheet] = useState<boolean>(false);
+  const [filterList, setFilterList] = useState<string[]>([]);
   const { isDownloaded } = useWallStore();
   const { color } = useThemeColor();
 
@@ -32,7 +36,7 @@ export default function Home(): JSX.Element {
   }, [selectedCategory, Walls, search]);
 
   return (
-    <>
+    <GestureHandlerRootView>
       {isDownloaded && (
         <View style={styles.toastContainer}>
           <Toast type="success" message="Image downloaded successfully!" />
@@ -47,6 +51,8 @@ export default function Home(): JSX.Element {
               setSearch={setSearch}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
+              openBottomsheet={openBottomsheet}
+              setOpenBottomsheet={setOpenBottomsheet}
             />
           ),
         }}
@@ -60,7 +66,15 @@ export default function Home(): JSX.Element {
         numColumns={2}
         renderItem={({ item: wall }) => <WallList wall={wall} />}
       />
-    </>
+
+      {openBottomsheet && (
+        <FilterSheet
+          onClose={() => setOpenBottomsheet(false)}
+          filterList={filterList}
+          setFilterList={setFilterList}
+        />
+      )}
+    </GestureHandlerRootView>
   );
 }
 
