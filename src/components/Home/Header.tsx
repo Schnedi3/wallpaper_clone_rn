@@ -13,13 +13,16 @@ import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { Walls } from "@/assets/data/Walls";
 
 export default function Header({
+  search,
+  setSearch,
   selectedCategory,
   setSelectedCategory,
 }: {
+  search: string;
+  setSearch: (value: string) => void;
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
 }) {
-  const [search, setSearch] = useState<string>("");
   const { color } = useThemeColor();
 
   const categories = Walls.map((wall) => wall.category);
@@ -50,7 +53,7 @@ export default function Header({
             />
             <TextInput
               style={[styles.searchInput, { color: color.primaryText }]}
-              placeholder="Search a wallpaper"
+              placeholder="Search for a wall..."
               placeholderTextColor={color.secondaryText}
               value={search}
               onChangeText={(search) => setSearch(search)}

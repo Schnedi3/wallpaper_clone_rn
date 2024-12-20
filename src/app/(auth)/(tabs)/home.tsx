@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Stack } from "expo-router";
 
@@ -10,13 +10,26 @@ import { useThemeColor } from "@/src/hooks/useThemeColor";
 import Header from "@/src/components/Home/Header";
 
 export default function Home(): JSX.Element {
+  const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { isDownloaded } = useWallStore();
   const { color } = useThemeColor();
 
-  const filteredWalls = Walls.filter(
-    (wall) => wall.category === selectedCategory
-  );
+  const filteredWalls = useMemo(() => {
+    let filtered = Walls;
+
+    if (selectedCategory) {
+      filtered = Walls.filter((wall) => wall.category === selectedCategory);
+    }
+
+    if (search) {
+      filtered = filtered.filter((wall) =>
+        wall.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    return filtered;
+  }, [selectedCategory, Walls, search]);
 
   return (
     <>
@@ -30,6 +43,8 @@ export default function Home(): JSX.Element {
         options={{
           header: () => (
             <Header
+              search={search}
+              setSearch={setSearch}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
             />
