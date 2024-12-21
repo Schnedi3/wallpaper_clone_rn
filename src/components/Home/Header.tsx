@@ -9,7 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 import { useThemeColor } from "@/src/hooks/useThemeColor";
-import { Walls } from "@/assets/data/Walls";
+import { walls } from "@/assets/data/walls";
 
 export default function Header({
   search,
@@ -28,7 +28,7 @@ export default function Header({
 }): JSX.Element {
   const { color } = useThemeColor();
 
-  const categories = Walls.map((wall) => wall.category);
+  const categories = walls.map((wall) => wall.category);
   const uniqueCategories = [...new Set(categories)];
 
   return (

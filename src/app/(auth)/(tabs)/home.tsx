@@ -3,7 +3,7 @@ import { FlatList } from "react-native";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { Walls } from "@/assets/data/Walls";
+import { walls } from "@/assets/data/walls";
 import WallList from "@/src/components/WallList";
 import Toast from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
@@ -20,10 +20,10 @@ export default function Home(): JSX.Element {
   const { color } = useThemeColor();
 
   const filteredWalls = useMemo(() => {
-    let filtered = Walls;
+    let filtered = walls;
 
     if (selectedCategory) {
-      filtered = Walls.filter((wall) => wall.category === selectedCategory);
+      filtered = walls.filter((wall) => wall.category === selectedCategory);
     }
 
     if (search) {
@@ -33,7 +33,7 @@ export default function Home(): JSX.Element {
     }
 
     return filtered;
-  }, [selectedCategory, Walls, search]);
+  }, [selectedCategory, walls, search]);
 
   return (
     <GestureHandlerRootView>
@@ -58,7 +58,7 @@ export default function Home(): JSX.Element {
         style={{ backgroundColor: color.secondaryBg }}
         contentContainerStyle={{ padding: 20, gap: 20 }}
         columnWrapperStyle={{ justifyContent: "space-between" }}
-        data={filteredWalls.length > 0 ? filteredWalls : Walls}
+        data={filteredWalls.length > 0 ? filteredWalls : walls}
         numColumns={2}
         renderItem={({ item: wall }) => <WallList wall={wall} />}
       />

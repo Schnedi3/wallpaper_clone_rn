@@ -1,6 +1,6 @@
 import { IWall } from "@/src/types/types";
 
-export const Walls: IWall[] = [
+export const walls: IWall[] = [
   {
     id: 1,
     title: "Mountain At Night",
