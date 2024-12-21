@@ -72,6 +72,7 @@ export default function FilterSheet({
             activeOpacity={0.5}
             style={[styles.footerButton, { backgroundColor: color.disabled }]}
             onPress={() => setFilterList([])}
+            disabled={filterList.length === 0}
           >
             <Text
               style={[styles.footerButtonText, { color: color.primaryText }]}
@@ -82,6 +83,7 @@ export default function FilterSheet({
           <TouchableOpacity
             activeOpacity={0.5}
             style={[styles.footerButton, { backgroundColor: color.accent }]}
+            disabled={filterList.length === 0}
           >
             <Text
               style={[styles.footerButtonText, { color: color.primaryText }]}
