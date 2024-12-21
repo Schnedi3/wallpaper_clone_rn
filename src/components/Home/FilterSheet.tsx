@@ -6,6 +6,7 @@ import BottomSheet, {
 
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { filters } from "@/assets/data/filters";
+import { FilterButton } from "./FilterButton";
 
 export default function FilterSheet({
   onClose,
@@ -18,17 +19,9 @@ export default function FilterSheet({
 }): JSX.Element {
   const { color } = useThemeColor();
 
-  const handleFilter = (filter: string) => {
-    setFilterList([...filterList, filter]);
-
-    if (filterList.includes(filter)) {
-      setFilterList(filterList.filter((f) => f !== filter));
-    }
-  };
-
   return (
     <BottomSheet
-      snapPoints={["70%"]}
+      snapPoints={["86%"]}
       onClose={onClose}
       enableContentPanningGesture={false}
       enableOverDrag={false}
@@ -60,30 +53,42 @@ export default function FilterSheet({
 
                 <View style={styles.filterBtnContainer}>
                   {sectionItems.map((item, index) => (
-                    <TouchableOpacity
-                      key={item + index}
-                      activeOpacity={0.5}
-                      style={[
-                        styles.filterBtn,
-                        {
-                          backgroundColor: filterList.includes(item)
-                            ? color.accent
-                            : color.catBg,
-                        },
-                      ]}
-                      onPress={() => handleFilter(item)}
-                    >
-                      <Text
-                        style={[styles.filter, { color: color.primaryText }]}
-                      >
-                        {item}
-                      </Text>
-                    </TouchableOpacity>
+                    <FilterButton
+                      key={index}
+                      item={item}
+                      sectionTitle={sectionTitle}
+                      filterList={filterList}
+                      setFilterList={setFilterList}
+                    />
                   ))}
                 </View>
               </View>
             )
           )}
+        </View>
+
+        <View style={{ marginTop: 25, flexDirection: "row", gap: 20 }}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={[styles.footerButton, { backgroundColor: color.disabled }]}
+            onPress={() => setFilterList([])}
+          >
+            <Text
+              style={[styles.footerButtonText, { color: color.primaryText }]}
+            >
+              Reset
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={[styles.footerButton, { backgroundColor: color.accent }]}
+          >
+            <Text
+              style={[styles.footerButtonText, { color: color.primaryText }]}
+            >
+              Apply
+            </Text>
+          </TouchableOpacity>
         </View>
       </BottomSheetView>
     </BottomSheet>
@@ -110,15 +115,17 @@ const styles = StyleSheet.create({
     gap: 10,
     flexWrap: "wrap",
   },
-  filterBtn: {
-    paddingTop: 4,
-    paddingBottom: 6,
-    paddingHorizontal: 20,
-    borderRadius: 30,
+  footerButton: {
+    flex: 1,
+    paddingTop: 14,
+    paddingBottom: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 14,
   },
-  filter: {
+  footerButtonText: {
     fontFamily: "QuicksandMed",
-    fontSize: 15,
-    textTransform: "capitalize",
+    fontSize: 18,
+    textAlign: "center",
   },
 });
