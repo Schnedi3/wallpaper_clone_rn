@@ -1,37 +1,39 @@
 import { useEffect } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import { AntDesign } from "@expo/vector-icons";
 
-import { tabBarIcons } from "@/src/constants/tabBarIcons";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 interface ITabBarButtonProps {
   onPress: () => void;
   isFocused: boolean;
   label: string;
-  routeName: "home" | "explore" | "profile";
-  props: any;
+  routeName: string;
 }
 
-export default function TabBarButton({
+export default function CustomTabBarButton({
+  onPress,
   isFocused,
   label,
   routeName,
-  ...props
 }: ITabBarButtonProps): JSX.Element {
   const scale = useSharedValue(0);
   const { color } = useThemeColor();
 
+  const tabBarIcons = {
+    home: (props: any) => <AntDesign name="home" {...props} />,
+    explore: (props: any) => <AntDesign name="find" {...props} />,
+    profile: (props: any) => <AntDesign name="user" {...props} />,
+  };
+
   useEffect(() => {
-    scale.value = withSpring(
-      typeof isFocused === "boolean" ? (isFocused ? 1 : 0) : isFocused,
-      { duration: 350 }
-    );
+    scale.value = withSpring(isFocused ? 1 : 0, { duration: 200 });
   }, [scale, isFocused]);
 
   const animatedIconStyle = useAnimatedStyle(() => {
@@ -53,9 +55,13 @@ export default function TabBarButton({
   });
 
   return (
-    <Pressable style={styles.tabBarButton} {...props}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={styles.tabBarButton}
+      onPress={onPress}
+    >
       <Animated.View style={[animatedIconStyle]}>
-        {tabBarIcons[routeName]({
+        {tabBarIcons[routeName as keyof typeof tabBarIcons]({
           color: isFocused ? color.accent : color.disabled,
           size: 26,
         })}
@@ -64,15 +70,13 @@ export default function TabBarButton({
       <Animated.Text
         style={[
           styles.tabBarButtonText,
-          {
-            color: isFocused ? color.accent : color.disabled,
-          },
           animatedTextStyle,
+          { color: color.disabled },
         ]}
       >
         {label}
       </Animated.Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

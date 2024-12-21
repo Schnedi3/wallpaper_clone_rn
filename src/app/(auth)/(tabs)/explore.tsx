@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import Liked from "@/src/components/Explore/Liked";
@@ -46,5 +45,3 @@ export default function Explore(): JSX.Element {
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({});

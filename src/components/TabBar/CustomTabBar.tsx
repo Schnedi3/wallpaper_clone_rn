@@ -1,10 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
-import TabBarButton from "./TabBarButton";
+import CustomTabBarButton from "./CustomTabBarButton";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function TabBar({
+export default function CustomTabBar({
   state,
   descriptors,
   navigation,
@@ -18,7 +18,7 @@ export default function TabBar({
         { backgroundColor: color.primaryBg, borderTopColor: color.border },
       ]}
     >
-      {state.routes.map((route: any, index: number) => {
+      {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
@@ -42,13 +42,12 @@ export default function TabBar({
         };
 
         return (
-          <TabBarButton
+          <CustomTabBarButton
             key={index}
             onPress={onPress}
             isFocused={isFocused}
-            label={label}
+            label={label as string}
             routeName={route.name}
-            props
           />
         );
       })}
