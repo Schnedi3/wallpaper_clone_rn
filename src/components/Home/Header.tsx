@@ -16,15 +16,13 @@ export default function Header({
   setSearch,
   selectedCategory,
   setSelectedCategory,
-  openBottomsheet,
-  setOpenBottomsheet,
+  setModalVisible,
 }: {
   search: string;
   setSearch: (value: string) => void;
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
-  openBottomsheet: boolean;
-  setOpenBottomsheet: (value: boolean) => void;
+  setModalVisible: (value: boolean) => void;
 }): JSX.Element {
   const { color } = useThemeColor();
 
@@ -77,8 +75,7 @@ export default function Header({
           <TouchableOpacity
             activeOpacity={0.5}
             style={[styles.filterBtn, { borderColor: color.disabled }]}
-            onPress={() => setOpenBottomsheet(true)}
-            disabled={openBottomsheet}
+            onPress={() => setModalVisible(true)}
           >
             <Ionicons
               name="filter-outline"

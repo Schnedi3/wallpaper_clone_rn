@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { Stack } from "expo-router";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { walls } from "@/assets/data/walls";
 import WallList from "@/src/components/WallList";
@@ -9,13 +8,13 @@ import Toast from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import Header from "@/src/components/Home/Header";
-import FilterSheet from "@/src/components/Home/FilterSheet";
+import { FilterModal } from "@/src/components/Home/FilterModal";
 
 export default function Home(): JSX.Element {
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [openBottomsheet, setOpenBottomsheet] = useState<boolean>(false);
   const [filterList, setFilterList] = useState<string[]>([]);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const { isDownloaded } = useWallStore();
   const { color } = useThemeColor();
 
@@ -36,8 +35,15 @@ export default function Home(): JSX.Element {
   }, [selectedCategory, walls, search]);
 
   return (
-    <GestureHandlerRootView>
+    <View>
       {isDownloaded && <Toast />}
+
+      <FilterModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        filterList={filterList}
+        setFilterList={setFilterList}
+      />
 
       <Stack.Screen
         options={{
@@ -47,8 +53,7 @@ export default function Home(): JSX.Element {
               setSearch={setSearch}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
-              openBottomsheet={openBottomsheet}
-              setOpenBottomsheet={setOpenBottomsheet}
+              setModalVisible={setModalVisible}
             />
           ),
         }}
@@ -62,14 +67,6 @@ export default function Home(): JSX.Element {
         numColumns={2}
         renderItem={({ item: wall }) => <WallList wall={wall} />}
       />
-
-      {openBottomsheet && (
-        <FilterSheet
-          onClose={() => setOpenBottomsheet(false)}
-          filterList={filterList}
-          setFilterList={setFilterList}
-        />
-      )}
-    </GestureHandlerRootView>
+    </View>
   );
 }

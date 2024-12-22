@@ -36,6 +36,7 @@ export const FilterButton = ({
             : color.catBg,
         },
         isColor && isSelected && { opacity: 1 },
+        isColor && { borderColor: color.border },
       ]}
       onPress={() => handleFilter(item)}
     >
@@ -54,10 +55,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   filterBtnColor: {
-    paddingVertical: 8,
-    paddingHorizontal: 40,
+    paddingVertical: 4,
+    paddingHorizontal: 36,
     borderRadius: 30,
     opacity: 0.6,
+    borderWidth: 1,
   },
   filter: {
     fontFamily: "QuicksandMed",
