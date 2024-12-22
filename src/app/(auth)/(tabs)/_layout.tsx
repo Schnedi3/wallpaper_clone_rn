@@ -4,7 +4,7 @@ import { Tabs } from "expo-router";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { CustomTabBarIcon } from "@/src/components/CustomTabBarIcon";
 
-export default function Layout(): JSX.Element {
+export default function TabLayout(): JSX.Element {
   const { color } = useThemeColor();
 
   return (

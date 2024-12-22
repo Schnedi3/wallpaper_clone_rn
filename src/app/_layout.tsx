@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { StatusBar, View } from "react-native";
-import { router, Stack, usePathname, useSegments } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { ClerkProvider, ClerkLoaded, useAuth } from "@clerk/clerk-expo";
 import {
@@ -9,16 +10,15 @@ import {
 } from "@react-navigation/native";
 
 import { tokenCache } from "@/src/lib/tokenCache";
-import { useEffect } from "react";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 
-export default function InitialLayout(): JSX.Element {
+export default function RootLayout(): JSX.Element {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache()}>
       <ClerkLoaded>
-        <RootLayout />
+        <InitialLayout />
       </ClerkLoaded>
     </ClerkProvider>
   );
@@ -40,12 +40,10 @@ const MyLightTheme = {
   },
 };
 
-function RootLayout(): JSX.Element {
+function InitialLayout(): JSX.Element {
   const { color, colorScheme } = useThemeColor();
 
-  const { isLoaded, isSignedIn } = useAuth();
-  const segments = useSegments();
-  const pathname = usePathname();
+  const { isSignedIn } = useAuth();
 
   useFonts({
     QuicksandBold: require("@/assets/fonts/Quicksand-Bold.ttf"),
@@ -54,28 +52,25 @@ function RootLayout(): JSX.Element {
   });
 
   useEffect(() => {
-    if (!isLoaded) return;
-    const inAuthGroup = segments[0] === "(auth)";
-
-    if (isSignedIn && !inAuthGroup) {
+    if (isSignedIn) {
       router.replace("/(auth)/(tabs)/home");
-    } else if (!isSignedIn && pathname !== "/") {
-      router.replace("/");
+    } else {
+      router.replace("/login");
     }
-  }, [isLoaded, isSignedIn]);
+  }, [isSignedIn]);
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? MyDarkTheme : MyLightTheme}>
       <View style={{ flex: 1 }}>
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
+          <Stack.Screen name="login" />
           <Stack.Screen name="(auth)" />
         </Stack>
-        <StatusBar
-          backgroundColor={color.primaryBg}
-          barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-        />
       </View>
+      <StatusBar
+        backgroundColor={color.primaryBg}
+        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+      />
     </ThemeProvider>
   );
 }

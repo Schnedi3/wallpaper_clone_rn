@@ -14,7 +14,7 @@ enum Strategy {
   Facebook = "oauth_facebook",
 }
 
-export default function LoginScreen(): JSX.Element {
+export default function Login(): JSX.Element {
   useWarmUpBrowser();
   const { startOAuthFlow: googleAuth } = useOAuth({
     strategy: Strategy.Google,
@@ -33,7 +33,7 @@ export default function LoginScreen(): JSX.Element {
 
     try {
       const { createdSessionId, setActive } = await selectedStrategy({
-        redirectUrl: Linking.createURL("/(auth)/(tabs)", { scheme: "myapp" }),
+        redirectUrl: Linking.createURL("/login", { scheme: "myapp" }),
       });
 
       if (createdSessionId) {
