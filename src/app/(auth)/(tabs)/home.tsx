@@ -60,7 +60,7 @@ export default function Home(): JSX.Element {
       />
 
       <FlatList
-        style={{ backgroundColor: color.secondaryBg }}
+        style={{ minHeight: "100%", backgroundColor: color.secondaryBg }}
         contentContainerStyle={{ padding: 20, gap: 20 }}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         data={filteredWalls.length > 0 ? filteredWalls : walls}
