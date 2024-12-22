@@ -1,22 +1,18 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useOAuth } from "@clerk/clerk-expo";
-import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { Colors } from "@/src/constants/Colors";
 import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
-import { useThemeColor } from "../hooks/useThemeColor";
+import { LoginButton } from "@/src/components/LoginButton";
 
 enum Strategy {
   Google = "oauth_google",
   Apple = "oauth_apple",
   Facebook = "oauth_facebook",
 }
-
-const AnimatedTouchableOpacity =
-  Animated.createAnimatedComponent(TouchableOpacity);
 
 export default function LoginScreen(): JSX.Element {
   useWarmUpBrowser();
@@ -96,36 +92,6 @@ export default function LoginScreen(): JSX.Element {
   );
 }
 
-const LoginButton = ({
-  onPress,
-  iconName,
-  buttonText,
-}: {
-  onPress: () => void;
-  iconName: keyof typeof Ionicons.glyphMap;
-  buttonText: string;
-}) => {
-  const { color } = useThemeColor();
-
-  return (
-    <AnimatedTouchableOpacity
-      activeOpacity={0.85}
-      style={styles.LoginButton}
-      onPress={onPress}
-      entering={FadeInDown.springify().delay(400)}
-    >
-      <View style={styles.continue}>
-        <Ionicons name={iconName} style={styles.logoIcon} />
-        <Text style={styles.LoginButtonText}>{buttonText}</Text>
-        <FontAwesome6
-          name="arrow-right-long"
-          style={{ fontSize: 20, color: color.accent }}
-        />
-      </View>
-    </AnimatedTouchableOpacity>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -159,29 +125,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: "auto",
     paddingVertical: 50,
-  },
-  LoginButton: {
-    width: "80%",
-    marginHorizontal: "10%",
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: Colors.darkBg,
-  },
-  continue: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  logoIcon: {
-    fontSize: 24,
-    color: Colors.LightText,
-  },
-  LoginButtonText: {
-    fontFamily: "QuicksandSemi",
-    fontSize: 17,
-    color: Colors.LightText,
   },
 });
