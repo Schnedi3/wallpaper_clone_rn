@@ -1,5 +1,6 @@
 import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { filters } from "@/assets/data/filters";
@@ -21,22 +22,23 @@ export const FilterModal = ({
   return (
     <View>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
       >
+        <BlurView
+          intensity={20}
+          experimentalBlurMethod="dimezisBlurView"
+          style={[{ flex: 1 }, StyleSheet.absoluteFill]}
+        ></BlurView>
         <TouchableOpacity
           style={[styles.modalClose, { backgroundColor: color.catBg }]}
           onPress={() => setModalVisible(false)}
         >
-          <Ionicons
-            name="close"
-            size={24}
-            color={color.primaryText}
-          />
+          <Ionicons name="close" size={24} color={color.primaryText} />
         </TouchableOpacity>
 
         <View style={styles.centeredView}>
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
   },
   modalClose: {
     position: "absolute",

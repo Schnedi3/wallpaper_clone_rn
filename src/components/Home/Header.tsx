@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { walls } from "@/assets/data/walls";
 
-export default function Header({
+export const Header = ({
   search,
   setSearch,
   selectedCategory,
@@ -23,7 +23,7 @@ export default function Header({
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
   setModalVisible: (value: boolean) => void;
-}): JSX.Element {
+}): JSX.Element => {
   const { color } = useThemeColor();
 
   const categories = walls.map((wall) => wall.category);
@@ -57,7 +57,7 @@ export default function Header({
               placeholder="Search for a wall..."
               placeholderTextColor={color.secondaryText}
               value={search}
-              onChangeText={(search) => setSearch(search)}
+              onChangeText={(text) => setSearch(text)}
             />
             {search && (
               <TouchableOpacity
@@ -115,7 +115,7 @@ export default function Header({
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

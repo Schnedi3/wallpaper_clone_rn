@@ -3,11 +3,11 @@ import { FlatList, View } from "react-native";
 import { Stack } from "expo-router";
 
 import { walls } from "@/assets/data/walls";
-import WallList from "@/src/components/WallList";
-import Toast from "@/src/components/Toast";
+import { WallList } from "@/src/components/WallList";
+import { Toast } from "@/src/components/Toast";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
-import Header from "@/src/components/Home/Header";
+import { Header } from "@/src/components/Home/Header";
 import { FilterModal } from "@/src/components/Home/FilterModal";
 
 export default function Home(): JSX.Element {

@@ -21,13 +21,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { useLikedStore } from "@/src/store/likedStore";
 import { Colors } from "@/src/constants/Colors";
 import { IWall } from "@/src/types/types";
-import DownloadShare from "@/src/components/DownloadShare";
+import { DownloadShare } from "@/src/components/DownloadShare";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const { width } = Dimensions.get("window");
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export default function WallList({ wall }: { wall: IWall }) {
+export const WallList = ({ wall }: { wall: IWall }) => {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
   const { liked, addToLiked } = useLikedStore();
   const { color } = useThemeColor();
@@ -92,7 +92,7 @@ export default function WallList({ wall }: { wall: IWall }) {
       </AnimatedPressable>
     </Animated.View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   wallContainer: {

@@ -13,12 +13,12 @@ import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 import { IWall } from "@/src/types/types";
 import { useLikedStore } from "@/src/store/likedStore";
 import { Colors } from "@/src/constants/Colors";
-import DownloadShare from "@/src/components/DownloadShare";
+import { DownloadShare } from "@/src/components/DownloadShare";
 
 const { width } = Dimensions.get("window");
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
+export const LikedImage = ({ wall }: { wall: IWall }): JSX.Element => {
   const [openOverlay, setOpenOverlay] = useState<boolean>(false);
   const { removeFromLiked } = useLikedStore();
 
@@ -53,7 +53,7 @@ export default function LikedImage({ wall }: { wall: IWall }): JSX.Element {
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   wall: {

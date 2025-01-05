@@ -16,13 +16,13 @@ import { Colors } from "@/src/constants/Colors";
 import { IWall } from "@/src/types/types";
 import { useWallStore } from "@/src/store/wallStore";
 
-export default function DownloadShare({
+export const DownloadShare = ({
   wall,
   setOpenOverlay,
 }: {
   wall: IWall;
   setOpenOverlay: (value: boolean) => void;
-}): JSX.Element {
+}): JSX.Element => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const { setIsDownloaded, setToastVisible } = useWallStore();

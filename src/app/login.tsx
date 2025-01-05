@@ -11,7 +11,6 @@ import { LoginButton } from "@/src/components/LoginButton";
 enum Strategy {
   Google = "oauth_google",
   Apple = "oauth_apple",
-  Facebook = "oauth_facebook",
 }
 
 export default function Login(): JSX.Element {
@@ -20,15 +19,11 @@ export default function Login(): JSX.Element {
     strategy: Strategy.Google,
   });
   const { startOAuthFlow: appleAuth } = useOAuth({ strategy: Strategy.Apple });
-  const { startOAuthFlow: facebookAuth } = useOAuth({
-    strategy: Strategy.Facebook,
-  });
 
   const handleLogin = async (social: Strategy) => {
     const selectedStrategy = {
       [Strategy.Google]: googleAuth,
       [Strategy.Apple]: appleAuth,
-      [Strategy.Facebook]: facebookAuth,
     }[social];
 
     try {
@@ -64,12 +59,6 @@ export default function Login(): JSX.Element {
           onPress={() => handleLogin(Strategy.Apple)}
           iconName="logo-apple"
           buttonText="Continue with Apple"
-        />
-
-        <LoginButton
-          onPress={() => handleLogin(Strategy.Facebook)}
-          iconName="logo-facebook"
-          buttonText="Continue with Facebook"
         />
       </View>
 

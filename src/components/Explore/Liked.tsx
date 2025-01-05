@@ -1,10 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { useLikedStore } from "@/src/store/likedStore";
-import LikedImage from "./LikedImage";
+import { LikedImage } from "./LikedImage";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function Liked(): JSX.Element {
+export const Liked = (): JSX.Element => {
   const { liked } = useLikedStore();
   const { color } = useThemeColor();
 
@@ -28,7 +28,7 @@ export default function Liked(): JSX.Element {
       renderItem={({ item: wall }) => <LikedImage wall={wall} />}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   WallsContainer: {

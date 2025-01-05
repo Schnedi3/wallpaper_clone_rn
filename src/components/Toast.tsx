@@ -11,7 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useWallStore } from "@/src/store/wallStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function Toast(): JSX.Element {
+export const Toast = (): JSX.Element => {
   const { toastVisible } = useWallStore();
   const { color } = useThemeColor();
   const YValue = useSharedValue(0);

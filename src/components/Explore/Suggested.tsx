@@ -1,10 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { walls } from "@/assets/data/walls";
-import WallList from "@/src/components/WallList";
+import { WallList } from "@/src/components/WallList";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function Suggested(): JSX.Element {
+export const Suggested = (): JSX.Element => {
   const { color } = useThemeColor();
 
   const shuffledWalls = [...walls].sort(() => 0.5 - Math.random());
@@ -32,7 +32,7 @@ export default function Suggested(): JSX.Element {
       renderItem={({ item: wall }) => <WallList wall={wall} />}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
